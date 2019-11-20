@@ -2,6 +2,7 @@ package com.mikey.attendance.model;
 
 import javax.persistence.*;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * @ProjectName hibernate_generate
@@ -16,14 +17,15 @@ import java.util.Objects;
 @Table(name = "sys_menu", schema = "attendance", catalog = "")
 public class SysMenuEntity {
     private int id;
+    private String roleType;
     private String title;
     private String icon;
     private String href;
     private Byte spread;
-    private String roleType;
+    private Set<SysMenuChildrenEntity> children;
 
     @Id
-    @Column(name = "id")
+    @Column(name = "id", nullable = false)
     public int getId() {
         return id;
     }
@@ -31,9 +33,18 @@ public class SysMenuEntity {
     public void setId(int id) {
         this.id = id;
     }
+    @Basic
+    @Column(name = "roleType", nullable = false, length = 255)
+    public String getRoleType() {
+        return roleType;
+    }
+
+    public void setRoleType(String roleType) {
+        this.roleType = roleType;
+    }
 
     @Basic
-    @Column(name = "title")
+    @Column(name = "title", nullable = false, length = 255)
     public String getTitle() {
         return title;
     }
@@ -43,7 +54,7 @@ public class SysMenuEntity {
     }
 
     @Basic
-    @Column(name = "icon")
+    @Column(name = "icon", nullable = false, length = 255)
     public String getIcon() {
         return icon;
     }
@@ -53,7 +64,7 @@ public class SysMenuEntity {
     }
 
     @Basic
-    @Column(name = "href")
+    @Column(name = "href", nullable = false, length = 255)
     public String getHref() {
         return href;
     }
@@ -63,7 +74,7 @@ public class SysMenuEntity {
     }
 
     @Basic
-    @Column(name = "spread")
+    @Column(name = "spread", nullable = true)
     public Byte getSpread() {
         return spread;
     }
@@ -72,31 +83,38 @@ public class SysMenuEntity {
         this.spread = spread;
     }
 
-    @Basic
-    @Column(name = "roleType")
-    public String getRoleType() {
-        return roleType;
-    }
-
-    public void setRoleType(String roleType) {
-        this.roleType = roleType;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+
         SysMenuEntity that = (SysMenuEntity) o;
-        return id == that.id &&
-                Objects.equals(title, that.title) &&
-                Objects.equals(icon, that.icon) &&
-                Objects.equals(href, that.href) &&
-                Objects.equals(spread, that.spread) &&
-                Objects.equals(roleType, that.roleType);
+
+        if (id != that.id) return false;
+        if (title != null ? !title.equals(that.title) : that.title != null) return false;
+        if (icon != null ? !icon.equals(that.icon) : that.icon != null) return false;
+        if (href != null ? !href.equals(that.href) : that.href != null) return false;
+        if (spread != null ? !spread.equals(that.spread) : that.spread != null) return false;
+
+        return true;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, icon, href, spread, roleType);
+        int result = id;
+        result = 31 * result + (title != null ? title.hashCode() : 0);
+        result = 31 * result + (icon != null ? icon.hashCode() : 0);
+        result = 31 * result + (href != null ? href.hashCode() : 0);
+        result = 31 * result + (spread != null ? spread.hashCode() : 0);
+        return result;
+    }
+
+    @OneToMany(mappedBy = "fatherMenu")
+    public Set<SysMenuChildrenEntity> getChildren() {
+        return children;
+    }
+
+    public void setChildren(Set<SysMenuChildrenEntity> children) {
+        this.children = children;
     }
 }

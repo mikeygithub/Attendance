@@ -15,35 +15,17 @@
 <body class="childrenBody">
 <form class="layui-form" style="width:80%;">
 	<div class="layui-form-item layui-row layui-col-xs12">
-		<label class="layui-form-label">宿舍名称</label>
+		<label class="layui-form-label">学院编号</label>
 		<div class="layui-input-block">
 			<input type="hidden" class="layui-input updateFlag" value="0"><!--更新-->
 			<input type="hidden" class="layui-input Id" >
-			<input type="text" class="layui-input dormName" lay-verify="required" placeholder="请输入宿舍名称">
+			<input type="text" class="layui-input collegeCode" lay-verify="required" placeholder="请输入编号">
 		</div>
 	</div>
 	<div class="layui-form-item layui-row layui-col-xs12">
-		<label class="layui-form-label">学生姓名</label>
+		<label class="layui-form-label">学院名称</label>
 		<div class="layui-input-block">
-			<input type="text" class="layui-input studentName" lay-verify="required" placeholder="请输入学生姓名">
-		</div>
-	</div>
-	<div class="layui-form-item layui-row layui-col-xs12">
-		<label class="layui-form-label">学生学号</label>
-		<div class="layui-input-block">
-			<input type="text" class="layui-input studentNo" lay-verify="required" placeholder="请输入学号">
-		</div>
-	</div>
-	<div class="layui-form-item layui-inline">
-		<label class="layui-form-label">晚归日期</label>
-		<div class="layui-input-inline">
-			<input type="text" name="datetime" id="lateReturnTime" lay-verify="datetime" autocomplete="off" class="layui-input lateReturnTime">
-		</div>
-	</div>
-	<div class="layui-form-item layui-row layui-col-xs12">
-		<label class="layui-form-label">晚归原因</label>
-		<div class="layui-input-block">
-			<textarea placeholder="请输入晚归原因" class="layui-textarea lateReturnCase"></textarea>
+			<input type="text" class="layui-input collegeName" lay-verify="required" placeholder="请输入学院名称">
 		</div>
 	</div>
 	<div class="layui-form-item layui-row layui-col-xs12">
@@ -54,6 +36,6 @@
 	</div>
 </form>
 <script type="text/javascript" src="/Attendance_war/layui/layui.js"></script>
-<script type="text/javascript" src="latereturnAdd.js"></script>
+<script type="text/javascript" src="attendanceAdd.js"></script>
 </body>
 </html>

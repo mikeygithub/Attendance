@@ -27,7 +27,7 @@ layui.use(['form','layer','jquery'],function(){
                 console.log(JSON.stringify(data));
                 if (data.code === 0 ){
                     //保存用户信息到session中
-                    window.sessionStorage.setItem("userName",data.data.userName);
+                    window.sessionStorage.setItem("loginAccount",data.data.loginAccount);
                     window.sessionStorage.setItem("userId",data.data.userId);
                     window.sessionStorage.setItem("roleType",data.data.roleType);
                     window.location.href = "page/common/index.html";

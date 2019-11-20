@@ -20,9 +20,10 @@ public class SysMenuChildrenEntity {
     private String icon;
     private String href;
     private Byte spread;
+    private SysMenuEntity fatherMenu;
 
     @Id
-    @Column(name = "id")
+    @Column(name = "id", nullable = false)
     public int getId() {
         return id;
     }
@@ -32,7 +33,7 @@ public class SysMenuChildrenEntity {
     }
 
     @Basic
-    @Column(name = "title")
+    @Column(name = "title", nullable = false, length = 255)
     public String getTitle() {
         return title;
     }
@@ -42,7 +43,7 @@ public class SysMenuChildrenEntity {
     }
 
     @Basic
-    @Column(name = "icon")
+    @Column(name = "icon", nullable = false, length = 255)
     public String getIcon() {
         return icon;
     }
@@ -52,7 +53,7 @@ public class SysMenuChildrenEntity {
     }
 
     @Basic
-    @Column(name = "href")
+    @Column(name = "href", nullable = false, length = 255)
     public String getHref() {
         return href;
     }
@@ -62,7 +63,7 @@ public class SysMenuChildrenEntity {
     }
 
     @Basic
-    @Column(name = "spread")
+    @Column(name = "spread", nullable = true)
     public Byte getSpread() {
         return spread;
     }
@@ -75,16 +76,34 @@ public class SysMenuChildrenEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+
         SysMenuChildrenEntity that = (SysMenuChildrenEntity) o;
-        return id == that.id &&
-                Objects.equals(title, that.title) &&
-                Objects.equals(icon, that.icon) &&
-                Objects.equals(href, that.href) &&
-                Objects.equals(spread, that.spread);
+
+        if (id != that.id) return false;
+        if (title != null ? !title.equals(that.title) : that.title != null) return false;
+        if (icon != null ? !icon.equals(that.icon) : that.icon != null) return false;
+        if (href != null ? !href.equals(that.href) : that.href != null) return false;
+        if (spread != null ? !spread.equals(that.spread) : that.spread != null) return false;
+
+        return true;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, icon, href, spread);
+        int result = id;
+        result = 31 * result + (title != null ? title.hashCode() : 0);
+        result = 31 * result + (icon != null ? icon.hashCode() : 0);
+        result = 31 * result + (href != null ? href.hashCode() : 0);
+        result = 31 * result + (spread != null ? spread.hashCode() : 0);
+        return result;
+    }
+
+    @ManyToOne
+    public SysMenuEntity getFatherMenu() {
+        return fatherMenu;
+    }
+
+    public void setFatherMenu(SysMenuEntity fatherMenu) {
+        this.fatherMenu = fatherMenu;
     }
 }

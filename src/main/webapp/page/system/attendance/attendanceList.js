@@ -8,7 +8,7 @@ layui.use(['form','layer','table','laytpl'],function(){
     //用户列表
     var tableIns = table.render({
         elem: '#userList',
-        url : '../../../biz/dorm_findByPage.action',
+        url : '../../../biz/attendance_findByPage.action',
         cellMinWidth : 95,
         page : true,
         height : "full-125",
@@ -17,8 +17,8 @@ layui.use(['form','layer','table','laytpl'],function(){
         id : "userListTable",
         cols : [[
             {type: "checkbox", fixed:"left", width:50},
-            {field: 'dormCode', title: '宿舍编号', align:'center'},
-            {field: 'dormName', title: '宿舍名称', minWidth:100, align:"center"},
+            {field: 'collegeCode', title: '学院编号', align:'center'},
+            {field: 'collegeName', title: '学院名称', minWidth:100, align:"center"},
             {title: '操作', minWidth:175, templet:'#userListBar',fixed:"right",align:"center"}
         ]],
         page: true
@@ -49,13 +49,13 @@ layui.use(['form','layer','table','laytpl'],function(){
         var index = layui.layer.open({
             title : "添加",
             type : 2,
-            content : "dormAdd.html",
+            content : "attendanceAdd.html",
             success : function(layero, index){
                 var body = layui.layer.getChildFrame('body', index);
                 if(edit){
-                    body.find(".Id").val(edit.dormId);
-                    body.find(".dormCode").val(edit.dormCode);  //登录名
-                    body.find(".dormName").val(edit.dormName);  //邮箱
+                    body.find(".Id").val(edit.collegeId);
+                    body.find(".collegeCode").val(edit.collegeCode);  //登录名
+                    body.find(".collegeName").val(edit.collegeName);  //邮箱
                     body.find(".updateFlag").val(1);//更新标识
                     form.render();
                 }
@@ -79,10 +79,10 @@ layui.use(['form','layer','table','laytpl'],function(){
             newsId = [];
         if(data.length > 0) {
             for (var i in data) {
-                newsId.push(data[i].dormId);
+                newsId.push(data[i].collegeId);
             }
             layer.confirm('确定删除选中记录？', {icon: 3, title: '提示信息'}, function (index) {
-                $.post("../../../biz/dorm_deleteBatch.action",{
+                $.post("../../../biz/attendance_delete.action",{
                     ids : newsId.join(',') //将需要删除的newsId作为参数传入
                 },function(data){
                     if (data.code===0){
@@ -128,8 +128,8 @@ layui.use(['form','layer','table','laytpl'],function(){
             });
         }else if(layEvent === 'del'){ //删除
             layer.confirm('确定删除此记录？',{icon:3, title:'提示信息'},function(index){
-                $.get("../../../biz/dorm_delete.action",{
-                    dormId : data.dormId  //将需要删除的newsId作为参数传入
+                $.get("../../../biz/attendance_delete.action",{
+                    collegeId : data.collegeId  //将需要删除的newsId作为参数传入
                 },function(data){
                     if (data.code === 0){
                         layer.msg("删除成功");

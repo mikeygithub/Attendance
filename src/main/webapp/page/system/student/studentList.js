@@ -18,11 +18,9 @@ layui.use(['form','layer','table','laytpl'],function(){
         cols : [[
             {type: "checkbox", fixed:"left", width:50},
             {field: 'studentId', title: '编号', align:'center'},
-            {field: 'studentNo', title: '学号', align:'center'},
-            {field: 'studentSex', title: '性别', minWidth:100, align:"center",templet:function(d){
-                    return d.studentSex == "0" ? "男" : "女";}
-            },
-            {field: 'studentName', title: '姓名', minWidth:200, align:'center'},
+            {field: 'studentCode', title: '学号', align:'center'},
+            {field: 'studentName', title: '姓名', align:'center'},
+            {field: 'studentPhone', title: '电话', align:'center'},
             {title: '操作', minWidth:175, templet:'#userListBar',fixed:"right",align:"center"}
         ]],
         page: true
@@ -59,7 +57,8 @@ layui.use(['form','layer','table','laytpl'],function(){
                 if(edit){
                     body.find(".Id").val(edit.studentId);
                     body.find(".studentName").val(edit.studentName);  //登录名
-                    body.find(".studentNo").val(edit.studentNo);  //邮箱
+                    body.find(".studentPhone").val(edit.studentPhone);  //登录名
+                    body.find(".studentCode").val(edit.studentCode);  //邮箱
                     body.find(".studentSex input[value="+edit.studentSex+"]").prop("checked","checked");  //性别
                     body.find(".updateFlag").val(1);//更新标识
                     form.render();

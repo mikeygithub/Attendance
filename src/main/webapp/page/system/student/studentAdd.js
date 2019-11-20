@@ -12,7 +12,8 @@ layui.use(['form','layer'],function(){
         $.post(updateFlag==='0'?"../../../biz/student_save.action":"../../../biz/student_update.action",{//
             studentId : updateFlag==='0'?null:$(".Id").val(),//id
             studentName : $(".studentName").val(),  //登录名
-            studentNo : $(".studentNo").val(),  //邮箱
+            studentPhone : $(".studentPhone").val(),  //
+            studentCode : $(".studentCode").val(),  //邮箱
             studentSex : data.field.studentSex,
         },function(res){
             if (res.code === 0){

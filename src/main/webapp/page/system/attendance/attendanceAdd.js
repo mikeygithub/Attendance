@@ -9,14 +9,14 @@ layui.use(['form','layer'],function(){
         //弹出loading
         var index = top.layer.msg('数据提交中，请稍候',{icon: 16,time:false,shade:0.8});
         // 实际使用时的提交信息
-        $.post(updateFlag==='0'?"../../../biz/instructor_save.action":"../../../biz/instructor_update.action",{//
-            instructorId : updateFlag==='0'?null:$(".Id").val(),//id
-            instructorCode : $(".instructorCode").val(),  //登录名
-            instructorName : $(".instructorName").val(),  //邮箱
+        $.post(updateFlag==='0'?"../../../biz/attendance_save.action":"../../../biz/attendance_update.action",{//
+            collegeId : updateFlag==='0'?null:$(".Id").val(),//id
+            collegeCode : $(".collegeCode").val(),  //登录名
+            collegeName : $(".collegeName").val(),  //邮箱
         },function(res){
             if (res.code === 0){
                 top.layer.close(index);
-                top.layer.msg(updateFlag==='0'?"用户添加！":"修改成功");
+                top.layer.msg(updateFlag==='0'?"添加成功！":"修改成功");
                 layer.closeAll("iframe");
                 //刷新父页面
                 parent.location.reload();

@@ -22,7 +22,7 @@
 			</result>
 		</action>
 		<!--学院-->
-		<action name="colleges_*" class="com.mikey.attendance.action.colleges.CollegesAction" method="{1}">
+		<action name="college_*" class="com.mikey.attendance.action.colleges.CollegesAction" method="{1}">
 			<result name="success" type="json">
 				<param name="root">r</param>
 			</result>

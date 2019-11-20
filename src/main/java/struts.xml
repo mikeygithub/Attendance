@@ -24,5 +24,4 @@
 
     <include file="struts-sys.xml"/>
     <include file="struts-biz.xml"/>
-    <include file="struts-app.xml"/>
 </struts>

@@ -11,8 +11,6 @@
 	<meta name="format-detection" content="telephone=no">
 	<link rel="stylesheet" href="../../../layui/css/layui.css" media="all" />
 	<link rel="stylesheet" href="../../../css/public.css" media="all" />
-	<script type="text/javascript" src="/Attendance_war/layui/layui.js"></script>
-	<script type="text/javascript" src="/Attendance_war/js/excel.js"></script>
 </head>
 <body class="childrenBody">
 <form class="layui-form">
@@ -30,10 +28,6 @@
 			<div class="layui-inline">
 				<a class="layui-btn layui-btn-danger layui-btn-normal delAll_btn">批量删除</a>
 			</div>
-			<div class="layui-inline">
-				<button type="button" lay-submit="" class="layui-btn layui-btn-warm" lay-filter="uploadImg">
-					<i class="layui-icon"></i>导出Excel</button>
-			</div>
 		</form>
 	</blockquote>
 	<table id="userList" lay-filter="userList"></table>
@@ -45,7 +39,7 @@
 		<a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del">删除</a>
 	</script>
 </form>
-
-<script type="text/javascript" src="latereturnList.js"></script>
+<script type="text/javascript" src="/Attendance_war/layui/layui.js"></script>
+<script type="text/javascript" src="attendanceList.js"></script>
 </body>
 </html>

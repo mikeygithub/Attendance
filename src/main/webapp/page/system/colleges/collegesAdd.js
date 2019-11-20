@@ -9,10 +9,10 @@ layui.use(['form','layer'],function(){
         //弹出loading
         var index = top.layer.msg('数据提交中，请稍候',{icon: 16,time:false,shade:0.8});
         // 实际使用时的提交信息
-        $.post(updateFlag==='0'?"../../../biz/colleges_save.action":"../../../biz/colleges_update.action",{//
-            collegesId : updateFlag==='0'?null:$(".Id").val(),//id
-            collegesCode : $(".collegesCode").val(),  //登录名
-            collegesName : $(".collegesName").val(),  //邮箱
+        $.post(updateFlag==='0'?"../../../biz/college_save.action":"../../../biz/college_update.action",{//
+            collegeId : updateFlag==='0'?null:$(".Id").val(),//id
+            collegeCode : $(".collegeCode").val(),  //登录名
+            collegeName : $(".collegeName").val(),  //邮箱
         },function(res){
             if (res.code === 0){
                 top.layer.close(index);
