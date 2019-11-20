@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN" "http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<!-- 定义系统设置模块 -->
+	<package name="system" extends="json-default" namespace="/" strict-method-invocation="false">
+		<!-- 登陆 -->
+		<action name="login_*" class="com.mikey.attendance.action.login.LoginAction" method="{1}">
+			<result name="success" type="json">
+				<param name="root">r</param>
+			</result>
+		</action>
+		<!--管理员-->
+		<action name="admin_*" class="com.mikey.attendance.action.admin.AdminAction" method="{1}">
+			<result name="success" type="json">
+				<param name="root">r</param>
+			</result>
+		</action>
+		<!--系统用户-->
+		<action name="sysuser_*" class="com.mikey.attendance.action.sysuser.SysUserAction" method="{1}">
+			<result name="success" type="json">
+				<param name="root">r</param>
+			</result>
+		</action>
+		<!--菜单-->
+		<action name="menu_*" class="com.mikey.attendance.action.menu.MenuAction" method="{1}">
+			<result name="success" type="json">
+				<param name="root">r</param>
+			</result>
+		</action>
+	</package>
+</struts>    

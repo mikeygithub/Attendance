@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+ 
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	<!-- 定义系统设置模块 -->
+	<package name="system" extends="struts-default" namespace="/sys">
+
+		<!-- 登陆 -->
+		<action name="login_*" class="com.pedmoni.models.sys.action.login.LoginAction" method="{1}">
+			<result name="success">/WEB-INF/page/system/common/main.html</result>
+			<result name="view">/WEB-INF/page/system/login/${view}.jsp</result>
+			<result name="toIndex">/default.html</result>
+			<result name="logout">/login.jsp</result>
+			<result name="error">/error/errorTimeOut.jsp</result>
+		</action>
+	</package>
+
+	<!-- JSON定义配置 -->
+	<package name="sysJson" extends="json-default" namespace="/sysJson">
+		<!-- JSON定义 -->
+	</package>
+
+</struts>    

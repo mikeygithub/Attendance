@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	<constant name="struts.custom.i18n.resources" value="messageResource" />
+	<!-- 设置上传限制为100M -->
+	<constant name="struts.multipart.maxSize" value="109715200" />
+	<!-- 编码设置 -->
+	<constant name="struts.i18n.encoding" value="UTF-8" />
+
+	<!-- 定义业务模块设置模块 -->
+	<package name="biz" extends="struts-default" namespace="/biz">
+	
+		
+		<!--&lt;!&ndash; 指导老师分配 &ndash;&gt;-->
+		<!--<action name="allotGuide_*"-->
+			<!--class="com.gxwzu.business.action.allotGuide.AllotGuideAction" method="{1}">-->
+			<!--<result name="success">/WEB-INF/page/business/allotGuide/allotGuide_${view}.jsp-->
+			<!--</result>-->
+		<!--</action>-->
+		
+	</package>
+</struts>    

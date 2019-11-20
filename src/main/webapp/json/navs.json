@@ -1,0 +1,119 @@
+{
+	"contentManagement": [
+		{
+			"title": "学生管理",
+			"icon": "&#xe630;",
+			"href": "",
+			"spread": false,
+			"children": [
+				{
+					"title": "学生列表",
+					"icon": "&#xe61c;",
+					"href": "/MSOSLE_war/page/system/student/studentList.html",
+					"spread": false
+				}
+			]
+		},
+		{
+			"title": "班级管理",
+			"icon": "&#xe630;",
+			"href": "",
+			"spread": false,
+			"children": [
+				{
+					"title": "班级列表",
+					"icon": "&#xe61c;",
+					"href": "/MSOSLE_war/page/system/class/classList.html",
+					"spread": false
+				}
+			]
+		},
+		{
+			"title": "学院管理",
+			"icon": "&#xe630;",
+			"href": "",
+			"spread": false,
+			"children": [
+				{
+					"title": "学院列表",
+					"icon": "&#xe61c;",
+					"href": "/MSOSLE_war/page/system/colleges/collegesList.html",
+					"spread": false
+				}
+			]
+		},
+		{
+			"title": "宿舍管理",
+			"icon": "&#xe630;",
+			"href": "",
+			"spread": false,
+			"children": [
+				{
+					"title": "宿舍列表",
+					"icon": "&#xe61c;",
+					"href": "/MSOSLE_war/page/system/dorm/dormList.html",
+					"spread": false
+				}
+			]
+		},
+		{
+			"title": "宿舍楼管理",
+			"icon": "&#xe612;",
+			"href": "",
+			"spread": false,
+			"children": [
+				{
+					"title": "宿舍楼列表",
+					"icon": "&#xe612;",
+					"href": "/MSOSLE_war/page/system/dormitory/dormitoryList.html",
+					"spread": false
+				}
+			]
+		},
+		{
+			"title": "宿管员管理",
+			"icon": "&#xe630;",
+			"href": "",
+			"spread": false,
+			"children": [
+				{
+					"title": "宿管员列表",
+					"icon": "&#xe61c;",
+					"href": "/MSOSLE_war/page/system/houseparent/houseparentList.html",
+					"spread": false
+				}
+			]
+		},
+		{
+			"title": "辅导员管理",
+			"icon": "&#xe630;",
+			"href": "",
+			"spread": false,
+			"children": [
+				{
+					"title": "辅导员列表",
+					"icon": "&#xe61c;",
+					"href": "/MSOSLE_war/page/system/instructor/instructorList.html",
+					"spread": false
+				}
+			]
+		},
+		{
+			"title": "晚归记录管理",
+			"icon": "&#xe630;",
+			"href": "",
+			"spread": false,
+			"children": [
+				{
+					"title": "记录列表",
+					"icon": "&#xe61c;",
+					"href": "/MSOSLE_war/page/system/latereturn/latereturnList.html",
+					"spread": false
+				}
+			]
+		}
+
+	]
+}
+
+

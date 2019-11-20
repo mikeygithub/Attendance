@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.mikey.attendance.model.SysTeacherEntity" table="sys_teacher" schema="attendance">
+        <id name="teacherId" column="teacher_id"/>
+        <property name="teacherName" column="teacher_name"/>
+        <property name="teacherCode" column="teacher_code"/>
+        <property name="teacherPhone" column="teacher_phone"/>
+        <property name="teacherEmail" column="teacher_email"/>
+    </class>
+</hibernate-mapping>

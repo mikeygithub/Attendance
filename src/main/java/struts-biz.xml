@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN" "http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<constant name="struts.custom.i18n.resources" value="messageResource" />
+	<!-- 设置上传限制为100M -->
+	<constant name="struts.multipart.maxSize" value="109715200" />
+	<!-- 编码设置 -->
+	<constant name="struts.i18n.encoding" value="UTF-8" />
+
+	<!-- 定义业务模块设置模块 -->
+	<package name="biz" extends="json-default" namespace="/biz" strict-method-invocation="false">
+		<!--学生-->
+		<action name="student_*" class="com.mikey.attendance.action.student.StudentAction" method="{1}">
+			<result name="success" type="json">
+				<param name="root">r</param>
+			</result>
+		</action>
+		<!--班级-->
+		<action name="classes_*" class="com.mikey.attendance.action.classes.ClassesAction" method="{1}">
+			<result name="success" type="json">
+				<param name="root">r</param>
+			</result>
+		</action>
+		<!--学院-->
+		<action name="colleges_*" class="com.mikey.attendance.action.colleges.CollegesAction" method="{1}">
+			<result name="success" type="json">
+				<param name="root">r</param>
+			</result>
+		</action>
+		<!--宿舍-->
+<!--		<action name="dorm_*" class="com.mikey.attendance.action.dorm.DormAction" method="{1}">-->
+<!--			<result name="success" type="json">-->
+<!--				<param name="root">r</param>-->
+<!--			</result>-->
+<!--		</action>-->
+<!--		&lt;!&ndash;宿舍楼&ndash;&gt;-->
+<!--		<action name="dormitory_*" class="com.mikey.attendance.action.dormitory.DormitoryAction" method="{1}">-->
+<!--			<result name="success" type="json">-->
+<!--				<param name="root">r</param>-->
+<!--			</result>-->
+<!--		</action>-->
+<!--		&lt;!&ndash;宿管员&ndash;&gt;-->
+<!--		<action name="houseparent_*" class="com.mikey.attendance.action.houseparent.HouseParentAction" method="{1}">-->
+<!--			<result name="success" type="json">-->
+<!--				<param name="root">r</param>-->
+<!--			</result>-->
+<!--		</action>-->
+<!--		&lt;!&ndash;辅导员&ndash;&gt;-->
+<!--		<action name="instructor_*" class="com.mikey.attendance.action.instructor.InstructorAction" method="{1}">-->
+<!--			<result name="success" type="json">-->
+<!--				<param name="root">r</param>-->
+<!--			</result>-->
+<!--		</action>-->
+<!--		&lt;!&ndash;晚归表&ndash;&gt;-->
+<!--		<action name="latereturn_*" class="com.mikey.attendance.action.latereturn.LateReturnAction" method="{1}">-->
+<!--			<result name="success" type="json">-->
+<!--				<param name="root">r</param>-->
+<!--			</result>-->
+<!--		</action>-->
+	</package>
+</struts>    

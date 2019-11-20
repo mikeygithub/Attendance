@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.mikey.attendance.model.SysUserEntity" table="sys_user" schema="attendance">
+        <id name="userId" column="user_id"/>
+        <property name="loginAccount" column="login_account"/>
+        <property name="loginPassword" column="login_password"/>
+        <property name="roleType" column="role_type"/>
+        <property name="userSex" column="user_sex"/>
+    </class>
+</hibernate-mapping>
