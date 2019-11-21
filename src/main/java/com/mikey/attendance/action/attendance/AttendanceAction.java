@@ -1,10 +1,8 @@
 package com.mikey.attendance.action.attendance;
 
 import com.mikey.attendance.common.PageBean;
-import com.mikey.attendance.model.BusAttendanceEntity;
-import com.mikey.attendance.model.SysCollegeEntity;
+import com.mikey.attendance.model.BizAttendanceEntity;
 import com.mikey.attendance.service.attendance.AttendanceService;
-import com.mikey.attendance.service.colleges.CollegesService;
 import com.mikey.attendance.vo.R;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
@@ -19,16 +17,16 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @Create: 2019-06-05 09:24
  * @Describe：
  **/
-public class AttendanceAction extends ActionSupport implements ModelDriven<BusAttendanceEntity> {
+public class AttendanceAction extends ActionSupport implements ModelDriven<BizAttendanceEntity> {
 
     @Autowired
     private AttendanceService attendanceService;
     //日志
-    private static Logger logger = Logger.getLogger(BusAttendanceEntity.class);
+    private static Logger logger = Logger.getLogger(BizAttendanceEntity.class);
     //模型驱动
-    private BusAttendanceEntity busAttendanceEntity = new BusAttendanceEntity();
+    private BizAttendanceEntity bizAttendanceEntity = new BizAttendanceEntity();
     //
-    private PageBean<BusAttendanceEntity> pageBean = new PageBean<>();
+    private PageBean<BizAttendanceEntity> pageBean = new PageBean<>();
     //返回集
     private R r = new R();
     //搜索值
@@ -47,7 +45,7 @@ public class AttendanceAction extends ActionSupport implements ModelDriven<BusAt
      */
     public String save() {
 
-        attendanceService.save(busAttendanceEntity);
+        attendanceService.save(bizAttendanceEntity);
 
         r = R.ok();
 
@@ -59,7 +57,7 @@ public class AttendanceAction extends ActionSupport implements ModelDriven<BusAt
      */
     public String delete() {
 
-        attendanceService.delete(busAttendanceEntity);
+        attendanceService.delete(bizAttendanceEntity);
 
         r = R.ok();
 
@@ -71,7 +69,7 @@ public class AttendanceAction extends ActionSupport implements ModelDriven<BusAt
      */
     public String update() {
 
-        attendanceService.update(busAttendanceEntity);
+        attendanceService.update(bizAttendanceEntity);
 
         r = R.ok();
 
@@ -85,7 +83,7 @@ public class AttendanceAction extends ActionSupport implements ModelDriven<BusAt
      */
     public String findById() {
 
-        BusAttendanceEntity byId = attendanceService.findById(busAttendanceEntity);
+        BizAttendanceEntity byId = attendanceService.findById(bizAttendanceEntity);
 
         r = R.ok().put("data", byId);
 
@@ -97,7 +95,7 @@ public class AttendanceAction extends ActionSupport implements ModelDriven<BusAt
      */
     public String findByPage() {
 
-        PageBean byPage = attendanceService.findByPage(key, new PageBean<BusAttendanceEntity>().setCurrPage(page).setPageSize(limit));
+        PageBean byPage = attendanceService.findByPage(key, new PageBean<BizAttendanceEntity>().setCurrPage(page).setPageSize(limit));
 
         r = R.ok().put("data", byPage.getRows()).put("count", byPage.getTotal());
 
@@ -123,19 +121,19 @@ public class AttendanceAction extends ActionSupport implements ModelDriven<BusAt
     }
 
     @Override
-    public BusAttendanceEntity getModel() {
-        return busAttendanceEntity;
+    public BizAttendanceEntity getModel() {
+        return bizAttendanceEntity;
     }
 
-    public BusAttendanceEntity getBusAttendanceEntity() {
-        return busAttendanceEntity;
+    public BizAttendanceEntity getBizAttendanceEntity() {
+        return bizAttendanceEntity;
     }
 
-    public void setBusAttendanceEntity(BusAttendanceEntity busAttendanceEntity) {
-        this.busAttendanceEntity = busAttendanceEntity;
+    public void setBizAttendanceEntity(BizAttendanceEntity bizAttendanceEntity) {
+        this.bizAttendanceEntity = bizAttendanceEntity;
     }
 
-    public void setPageBean(PageBean<BusAttendanceEntity> pageBean) {
+    public void setPageBean(PageBean<BizAttendanceEntity> pageBean) {
         this.pageBean = pageBean;
     }
     public R getR() {

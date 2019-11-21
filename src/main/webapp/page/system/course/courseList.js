@@ -8,7 +8,7 @@ layui.use(['form','layer','table','laytpl'],function(){
     //用户列表
     var tableIns = table.render({
         elem: '#userList',
-        url : '../../../biz/college_findByPage.action',
+        url : '../../../biz/course_findByPage.action',
         cellMinWidth : 95,
         page : true,
         height : "full-125",
@@ -17,8 +17,11 @@ layui.use(['form','layer','table','laytpl'],function(){
         id : "userListTable",
         cols : [[
             {type: "checkbox", fixed:"left", width:50},
-            {field: 'collegeCode', title: '学院编号', align:'center'},
-            {field: 'collegeName', title: '学院名称', minWidth:100, align:"center"},
+            {field: 'courseCode', title: '课程编号', align:'center'},
+            {field: 'courseName', title: '课程名称', minWidth:100, align:"center"},
+            {field: 'classesList', title: '所教班级',  align:'center',templet:function(d){
+                    return "dddddd";
+                }},
             {title: '操作', minWidth:175, templet:'#userListBar',fixed:"right",align:"center"}
         ]],
         page: true
@@ -49,13 +52,13 @@ layui.use(['form','layer','table','laytpl'],function(){
         var index = layui.layer.open({
             title : "添加",
             type : 2,
-            content : "collegesAdd.html",
+            content : "courseAdd.html",
             success : function(layero, index){
                 var body = layui.layer.getChildFrame('body', index);
                 if(edit){
-                    body.find(".Id").val(edit.collegeId);
-                    body.find(".collegeCode").val(edit.collegeCode);  //登录名
-                    body.find(".collegeName").val(edit.collegeName);  //邮箱
+                    body.find(".Id").val(edit.courseId);
+                    body.find(".courseCode").val(edit.courseCode);  //登录名
+                    body.find(".courseName").val(edit.courseName);  //邮箱
                     body.find(".updateFlag").val(1);//更新标识
                     form.render();
                 }

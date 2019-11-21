@@ -4,7 +4,7 @@
     "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
 
-    <class name="com.mikey.attendance.model.BusAttendanceEntity" table="bus_attendance" schema="attendance">
+    <class name="com.mikey.attendance.model.BizAttendanceEntity" table="biz_attendance" schema="attendance">
         <id name="attendanceId" column="attendance_id"/>
         <property name="attendanceType" column="attendance_type"/>
         <property name="attendanceTime" column="attendance_time"/>

@@ -1,6 +1,7 @@
 package com.mikey.attendance.model;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -19,6 +20,9 @@ public class SysCourseEntity {
     private String courseName;
     private String courseCode;
     private Integer teacherId;
+
+    @Transient
+    private List<SysClassesEntity> sysClassesEntities;
 
     @Id
     @Column(name = "course_id")
@@ -62,13 +66,25 @@ public class SysCourseEntity {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         SysCourseEntity that = (SysCourseEntity) o;
         return courseId == that.courseId &&
                 Objects.equals(courseName, that.courseName) &&
                 Objects.equals(courseCode, that.courseCode) &&
                 Objects.equals(teacherId, that.teacherId);
+    }
+    @Transient
+    public List<SysClassesEntity> getSysClassesEntities() {
+        return sysClassesEntities;
+    }
+
+    public void setSysClassesEntities(List<SysClassesEntity> sysClassesEntities) {
+        this.sysClassesEntities = sysClassesEntities;
     }
 
     @Override

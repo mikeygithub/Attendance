@@ -1,8 +1,7 @@
 package com.mikey.attendance.service.attendance;
 
 import com.mikey.attendance.common.PageBean;
-import com.mikey.attendance.model.BusAttendanceEntity;
-import com.mikey.attendance.model.SysCollegeEntity;
+import com.mikey.attendance.model.BizAttendanceEntity;
 
 /**
  * @Program: YoungVolunteer
@@ -15,24 +14,24 @@ public interface AttendanceService {
     /**
      * 添加
      */
-    public void save(BusAttendanceEntity busAttendanceEntity);
+    public void save(BizAttendanceEntity bizAttendanceEntity);
 
     /**
      * 删除
      */
-    public void delete(BusAttendanceEntity busAttendanceEntity);
+    public void delete(BizAttendanceEntity bizAttendanceEntity);
 
     /**
      * 修改
      */
-    public void update(BusAttendanceEntity busAttendanceEntity);
+    public void update(BizAttendanceEntity bizAttendanceEntity);
 
     /**
      * 查询
      *
      * @return
      */
-    public BusAttendanceEntity findById(BusAttendanceEntity busAttendanceEntity);
+    public BizAttendanceEntity findById(BizAttendanceEntity bizAttendanceEntity);
 
     /**
      * 查询
@@ -41,7 +40,7 @@ public interface AttendanceService {
      * @param pageBean
      * @return
      */
-    public PageBean findByPage(String key, PageBean<BusAttendanceEntity> pageBean);
+    public PageBean findByPage(String key, PageBean<BizAttendanceEntity> pageBean);
 
     /**
      * 批量删除

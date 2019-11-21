@@ -4,6 +4,7 @@ import com.mikey.attendance.common.PageBean;
 import com.mikey.attendance.dao.classes.ClassesDao;
 import com.mikey.attendance.model.SysClassesEntity;
 import com.mikey.attendance.service.classes.ClassesService;
+import com.mikey.attendance.vo.R;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -49,5 +50,10 @@ public class ClassesServiceImpl implements ClassesService {
     @Override
     public void deleteBatch(String[] Ids) {
       classesDao.deleteBatch(Ids);
+    }
+
+    @Override
+    public R getClasses(String courseId) {
+        return classesDao.getClasses(courseId);
     }
 }

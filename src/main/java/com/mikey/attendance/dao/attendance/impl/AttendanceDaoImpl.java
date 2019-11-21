@@ -2,7 +2,7 @@ package com.mikey.attendance.dao.attendance.impl;
 
 import com.mikey.attendance.common.PageBean;
 import com.mikey.attendance.dao.attendance.AttendanceDao;
-import com.mikey.attendance.model.BusAttendanceEntity;
+import com.mikey.attendance.model.BizAttendanceEntity;
 import com.mikey.attendance.model.SysCollegeEntity;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -34,39 +34,39 @@ public class AttendanceDaoImpl implements AttendanceDao {
     private HibernateTemplate hibernateTemplate;
 
     @Override
-    public void save(BusAttendanceEntity busAttendanceEntity) {
-        sessionFactory.getCurrentSession().save(busAttendanceEntity);
+    public void save(BizAttendanceEntity bizAttendanceEntity) {
+        sessionFactory.getCurrentSession().save(bizAttendanceEntity);
     }
 
     @Override
-    public void delete(BusAttendanceEntity busAttendanceEntity) {
-        sessionFactory.getCurrentSession().delete(busAttendanceEntity);
+    public void delete(BizAttendanceEntity bizAttendanceEntity) {
+        sessionFactory.getCurrentSession().delete(bizAttendanceEntity);
     }
 
     @Override
-    public void update(BusAttendanceEntity busAttendanceEntity) {
-        sessionFactory.getCurrentSession().update(busAttendanceEntity);
+    public void update(BizAttendanceEntity bizAttendanceEntity) {
+        sessionFactory.getCurrentSession().update(bizAttendanceEntity);
     }
 
     @Override
-    public BusAttendanceEntity findById(BusAttendanceEntity busAttendanceEntity) {
+    public BizAttendanceEntity findById(BizAttendanceEntity bizAttendanceEntity) {
         Session session = sessionFactory.openSession();
 
         Criteria criteria = session.createCriteria(SysCollegeEntity.class);
 
         List list = criteria.add(
-                Restrictions.or(Restrictions.eq("collegesId", busAttendanceEntity.getAttendanceId())))
+                Restrictions.or(Restrictions.eq("collegesId", bizAttendanceEntity.getAttendanceId())))
                 .setFirstResult(0)
                 .setMaxResults(1).list();
 
         session.close();
 
-        return list!=null&&list.size()>0? (BusAttendanceEntity) list.get(0) :null;
+        return list!=null&&list.size()>0? (BizAttendanceEntity) list.get(0) :null;
 
     }
 
     @Override
-    public PageBean findByPage(String key, PageBean<BusAttendanceEntity> pageBean) {
+    public PageBean findByPage(String key, PageBean<BizAttendanceEntity> pageBean) {
         Session session = sessionFactory.openSession();
 
         Criteria criteria = session.createCriteria(SysCollegeEntity.class);

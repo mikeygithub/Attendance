@@ -14,8 +14,8 @@ import java.util.Objects;
  **/
 
 @Entity
-@Table(name = "bus_attendance", schema = "attendance", catalog = "")
-public class BusAttendanceEntity {
+@Table(name = "biz_attendance", schema = "attendance", catalog = "")
+public class BizAttendanceEntity {
     private int attendanceId;
     private Integer attendanceType;
     private Timestamp attendanceTime;
@@ -76,7 +76,7 @@ public class BusAttendanceEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        BusAttendanceEntity that = (BusAttendanceEntity) o;
+        BizAttendanceEntity that = (BizAttendanceEntity) o;
         return attendanceId == that.attendanceId &&
                 Objects.equals(attendanceType, that.attendanceType) &&
                 Objects.equals(attendanceTime, that.attendanceTime) &&

@@ -2,6 +2,7 @@ package com.mikey.attendance.service.classes;
 
 import com.mikey.attendance.common.PageBean;
 import com.mikey.attendance.model.SysClassesEntity;
+import com.mikey.attendance.vo.R;
 
 /**
  * @Program: YoungVolunteer
@@ -48,4 +49,6 @@ public interface ClassesService {
      * @param Ids
      */
     public void deleteBatch(String[] Ids);
+
+    R getClasses(String courseId);
 }

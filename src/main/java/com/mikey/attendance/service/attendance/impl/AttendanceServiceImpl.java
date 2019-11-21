@@ -2,11 +2,7 @@ package com.mikey.attendance.service.attendance.impl;
 
 import com.mikey.attendance.common.PageBean;
 import com.mikey.attendance.dao.attendance.AttendanceDao;
-import com.mikey.attendance.dao.colleges.CollegesDao;
-import com.mikey.attendance.dao.course.CourseDao;
-import com.mikey.attendance.model.BusAttendanceEntity;
-import com.mikey.attendance.model.SysCollegeEntity;
-import com.mikey.attendance.model.SysCourseEntity;
+import com.mikey.attendance.model.BizAttendanceEntity;
 import com.mikey.attendance.service.attendance.AttendanceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,33 +21,33 @@ public class AttendanceServiceImpl implements AttendanceService {
     private AttendanceDao attendanceDao;
 
     @Override
-    public void save(BusAttendanceEntity busAttendanceEntity) {
+    public void save(BizAttendanceEntity bizAttendanceEntity) {
 
-        attendanceDao.save(busAttendanceEntity);
-
-    }
-
-    @Override
-    public void delete(BusAttendanceEntity busAttendanceEntity) {
-
-        attendanceDao.delete(busAttendanceEntity);
+        attendanceDao.save(bizAttendanceEntity);
 
     }
 
     @Override
-    public void update(BusAttendanceEntity busAttendanceEntity) {
+    public void delete(BizAttendanceEntity bizAttendanceEntity) {
 
-        attendanceDao.update(busAttendanceEntity);
+        attendanceDao.delete(bizAttendanceEntity);
 
     }
 
     @Override
-    public BusAttendanceEntity findById(BusAttendanceEntity busAttendanceEntity) {
-       return attendanceDao.findById(busAttendanceEntity);
+    public void update(BizAttendanceEntity bizAttendanceEntity) {
+
+        attendanceDao.update(bizAttendanceEntity);
+
     }
 
     @Override
-    public PageBean findByPage(String key, PageBean<BusAttendanceEntity> pageBean) {
+    public BizAttendanceEntity findById(BizAttendanceEntity bizAttendanceEntity) {
+       return attendanceDao.findById(bizAttendanceEntity);
+    }
+
+    @Override
+    public PageBean findByPage(String key, PageBean<BizAttendanceEntity> pageBean) {
         return attendanceDao.findByPage(key,pageBean);
     }
 

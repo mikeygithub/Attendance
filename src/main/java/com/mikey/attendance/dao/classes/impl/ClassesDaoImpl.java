@@ -2,7 +2,10 @@ package com.mikey.attendance.dao.classes.impl;
 
 import com.mikey.attendance.common.PageBean;
 import com.mikey.attendance.dao.classes.ClassesDao;
+import com.mikey.attendance.model.BizCouOfClaEntity;
 import com.mikey.attendance.model.SysClassesEntity;
+import com.mikey.attendance.vo.ClassesTransferVo;
+import com.mikey.attendance.vo.R;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -14,7 +17,9 @@ import org.springframework.orm.hibernate4.HibernateTemplate;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @Program: YoungVolunteer
@@ -101,5 +106,39 @@ public class ClassesDaoImpl implements ClassesDao {
             list.add(classesEntity);
         }
         hibernateTemplate.deleteAll(list);
+    }
+
+    /**
+     * 新增查询全部
+     * 携带课程id查询已选和未选
+     * @param courseId
+     * @return
+     */
+    @Override
+    public R getClasses(String courseId) {
+
+        Session session = sessionFactory.openSession();
+        Criteria criteria = session.createCriteria(SysClassesEntity.class);
+
+        List<ClassesTransferVo> list = new ArrayList<>();//result
+        List<SysClassesEntity> classesEntities = new ArrayList<>();//all
+        Set<SysClassesEntity> resultClass = new HashSet<>();//
+
+        if (courseId==null||courseId=="") {
+            classesEntities=criteria.list();
+        }else {
+            Criteria crt = session.createCriteria(BizCouOfClaEntity.class);
+            List<BizCouOfClaEntity> cou_of_cla = crt.add(Restrictions.eq("courseId", courseId)).list();
+
+            for(BizCouOfClaEntity bizCouOfClaEntity:cou_of_cla){
+                //查询班级
+                hibernateTemplate.get(SysClassesEntity.class,bizCouOfClaEntity.getClassesId());
+            }
+
+        }
+
+        session.close();
+
+        return R.ok().put("data",resultClass);
     }
 }

@@ -27,35 +27,17 @@
 				<param name="root">r</param>
 			</result>
 		</action>
-		<!--宿舍-->
-<!--		<action name="dorm_*" class="com.mikey.attendance.action.dorm.DormAction" method="{1}">-->
-<!--			<result name="success" type="json">-->
-<!--				<param name="root">r</param>-->
-<!--			</result>-->
-<!--		</action>-->
-<!--		&lt;!&ndash;宿舍楼&ndash;&gt;-->
-<!--		<action name="dormitory_*" class="com.mikey.attendance.action.dormitory.DormitoryAction" method="{1}">-->
-<!--			<result name="success" type="json">-->
-<!--				<param name="root">r</param>-->
-<!--			</result>-->
-<!--		</action>-->
-<!--		&lt;!&ndash;宿管员&ndash;&gt;-->
-<!--		<action name="houseparent_*" class="com.mikey.attendance.action.houseparent.HouseParentAction" method="{1}">-->
-<!--			<result name="success" type="json">-->
-<!--				<param name="root">r</param>-->
-<!--			</result>-->
-<!--		</action>-->
-<!--		&lt;!&ndash;辅导员&ndash;&gt;-->
-<!--		<action name="instructor_*" class="com.mikey.attendance.action.instructor.InstructorAction" method="{1}">-->
-<!--			<result name="success" type="json">-->
-<!--				<param name="root">r</param>-->
-<!--			</result>-->
-<!--		</action>-->
-<!--		&lt;!&ndash;晚归表&ndash;&gt;-->
-<!--		<action name="latereturn_*" class="com.mikey.attendance.action.latereturn.LateReturnAction" method="{1}">-->
-<!--			<result name="success" type="json">-->
-<!--				<param name="root">r</param>-->
-<!--			</result>-->
-<!--		</action>-->
+		<!--课程-->
+		<action name="course_*" class="com.mikey.attendance.action.course.CourseAction" method="{1}">
+			<result name="success" type="json">
+				<param name="root">r</param>
+			</result>
+		</action>
+		<!--考勤记录-->
+		<action name="attendance_*" class="com.mikey.attendance.action.attendance.AttendanceAction" method="{1}">
+			<result name="success" type="json">
+				<param name="root">r</param>
+			</result>
+		</action>
 	</package>
 </struts>    
