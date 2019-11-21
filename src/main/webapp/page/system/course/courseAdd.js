@@ -5,6 +5,8 @@ layui.use(['form','layer','transfer','util'],function(){
         util = layui.util,
         $ = layui.jquery;
 
+    var classes = '';
+
     form.on("submit(addUser)",function(data){
         //新增,更新
         var updateFlag = $(".updateFlag").val().valueOf();//0:添加 1:更新
@@ -15,6 +17,7 @@ layui.use(['form','layer','transfer','util'],function(){
             courseId : updateFlag==='0'?null:$(".Id").val(),//id
             courseCode : $(".courseCode").val(),  //登录名
             courseName : $(".courseName").val(),  //邮箱
+            courseClasses: classes //授课班级
         },function(res){
             if (res.code === 0){
                 top.layer.close(index);
@@ -56,19 +59,32 @@ layui.use(['form','layer','transfer','util'],function(){
         ,{"value": "8", "title": "矛盾"}
         ,{"value": "9", "title": "贤心"}
     ]
-
-    //实例调用
-        transfer.render({
-        elem: '#classes',
-        showSearch: true,
-        title: ['未选班级', '已选班级'],
-        data: data1,
-        id: 'classesCon', //定义唯一索引
-        onchange:function (data, index) {
-            console.log(data); //得到当前被穿梭的数据
-            console.log(index); //如果数据来自左边，index 为 0，否则为 1
+    //请求数据
+    $.post("../../../biz/classes_getClasses.action",{
+        courseId : $(".Id").val() //将需要删除的newsId作为参数传入
+    },function(data){
+        console.log(data)
+        if (data.code===0){
+            //实例调用
+            transfer.render({
+                elem: '#classes',
+                showSearch: true,
+                title: ['未选班级', '已选班级'],
+                data: data.classes,
+                id: 'classesCon', //定义唯一索引
+                onchange:function (data, index) {
+                    console.log(data); //得到当前被穿梭的数据
+                    console.log(index); //如果数据来自左边，index 为 0，否则为 1
+                    for (i=0;i<data.size;i++){
+                        data[i].value+","
+                    }
+                }
+            })
+        }else {
+            layer.msg("获取数据失败");
         }
     })
+
     //批量办法定事件
     util.event('lay-demoTransferActive', {
         getData: function(othis){

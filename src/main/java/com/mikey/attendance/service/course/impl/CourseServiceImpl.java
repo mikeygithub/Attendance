@@ -23,9 +23,9 @@ public class CourseServiceImpl implements CourseService {
     private CourseDao courseDao;
 
     @Override
-    public void save(SysCourseEntity sysCourseEntity) {
+    public void save(SysCourseEntity sysCourseEntity,String courseClass) {
 
-        courseDao.save(sysCourseEntity);
+        courseDao.save(sysCourseEntity,courseClass);
 
     }
 

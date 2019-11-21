@@ -2,6 +2,7 @@ package com.mikey.attendance.dao.course.impl;
 
 import com.mikey.attendance.common.PageBean;
 import com.mikey.attendance.dao.course.CourseDao;
+import com.mikey.attendance.model.BizCouOfClaEntity;
 import com.mikey.attendance.model.SysCollegeEntity;
 import com.mikey.attendance.model.SysCourseEntity;
 import org.hibernate.Criteria;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate4.HibernateTemplate;
 import org.springframework.stereotype.Component;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,8 +36,15 @@ public class CourseDaoImpl implements CourseDao {
     private HibernateTemplate hibernateTemplate;
 
     @Override
-    public void save(SysCourseEntity sysCourseEntity) {
-        sessionFactory.getCurrentSession().save(sysCourseEntity);
+    public void save(SysCourseEntity sysCourseEntity,String courseClass) {
+        Integer save = (Integer) sessionFactory.getCurrentSession().save(sysCourseEntity);
+        String[] ids = courseClass.split(",");
+        for (String id:ids){
+            BizCouOfClaEntity bizCouOfClaEntity = new BizCouOfClaEntity();
+            bizCouOfClaEntity.setCourseId(save);
+            bizCouOfClaEntity.setClassesId(Integer.parseInt(id));
+            sessionFactory.getCurrentSession().save(bizCouOfClaEntity);
+        }
     }
 
     @Override

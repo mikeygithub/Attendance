@@ -120,25 +120,40 @@ public class ClassesDaoImpl implements ClassesDao {
         Session session = sessionFactory.openSession();
         Criteria criteria = session.createCriteria(SysClassesEntity.class);
 
-        List<ClassesTransferVo> list = new ArrayList<>();//result
-        List<SysClassesEntity> classesEntities = new ArrayList<>();//all
-        Set<SysClassesEntity> resultClass = new HashSet<>();//
+        List<ClassesTransferVo> list = new ArrayList<>();
+        //result
+        List<SysClassesEntity> allClass = new ArrayList<>();
+        //已经选择的class
+        List<SysClassesEntity> selectClass = new ArrayList<>();
+        //all
+        Set<ClassesTransferVo> resultClass = new HashSet<>();
+
 
         if (courseId==null||courseId=="") {
-            classesEntities=criteria.list();
+            allClass=criteria.list();
         }else {
+            allClass=criteria.list();
             Criteria crt = session.createCriteria(BizCouOfClaEntity.class);
             List<BizCouOfClaEntity> cou_of_cla = crt.add(Restrictions.eq("courseId", courseId)).list();
 
             for(BizCouOfClaEntity bizCouOfClaEntity:cou_of_cla){
                 //查询班级
-                hibernateTemplate.get(SysClassesEntity.class,bizCouOfClaEntity.getClassesId());
+                SysClassesEntity sysClassesEntity = hibernateTemplate.get(SysClassesEntity.class, bizCouOfClaEntity.getClassesId());
+                selectClass.add(sysClassesEntity);
+                //将总的移除
+                allClass.remove(sysClassesEntity);
             }
 
+        }
+        for(SysClassesEntity s:selectClass){
+            resultClass.add(new ClassesTransferVo().setValue(s.getClassesId()+"").setTitle(s.getClassesName()).setChecked(false).setDisabled(false));
+        }
+        for(SysClassesEntity s:allClass){
+            resultClass.add(new ClassesTransferVo().setValue(s.getClassesId()+"").setTitle(s.getClassesName()).setChecked(true).setDisabled(false));
         }
 
         session.close();
 
-        return R.ok().put("data",resultClass);
+        return R.ok().put("classes",resultClass);
     }
 }

@@ -39,7 +39,8 @@ public class CourseAction extends ActionSupport implements ModelDriven<SysCourse
     private Integer limit;
     //批量删除id
     private String ids;
-
+    //授课班级
+    private String courseClasses;
     /////////////////////////////////////////
 
     /**
@@ -47,7 +48,7 @@ public class CourseAction extends ActionSupport implements ModelDriven<SysCourse
      */
     public String save() {
 
-        courseService.save(sysCourseEntity);
+        courseService.save(sysCourseEntity,courseClasses);
 
         r = R.ok();
 

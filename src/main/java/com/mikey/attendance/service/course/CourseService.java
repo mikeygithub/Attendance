@@ -15,7 +15,7 @@ public interface CourseService {
     /**
      * 添加
      */
-    public void save(SysCourseEntity sysCourseEntity);
+    public void save(SysCourseEntity sysCourseEntity,String courseClass);
 
     /**
      * 删除

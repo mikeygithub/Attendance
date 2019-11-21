@@ -1,5 +1,7 @@
 package com.mikey.attendance.vo;
 
+import java.io.Serializable;
+
 /**
  * @ProjectName Attendance
  * @Author 麦奇
@@ -9,7 +11,7 @@ package com.mikey.attendance.vo;
  * @Description: 用于课程添加的时候所需要的JSON数据格式
  **/
 
-public class ClassesTransferVo {
+public class ClassesTransferVo implements Serializable {
 
     private String value;
     private String title;
@@ -20,31 +22,35 @@ public class ClassesTransferVo {
         return value;
     }
 
-    public void setValue(String value) {
+    public ClassesTransferVo setValue(String value) {
         this.value = value;
+        return this;
     }
 
     public String getTitle() {
         return title;
     }
 
-    public void setTitle(String title) {
+    public ClassesTransferVo setTitle(String title) {
         this.title = title;
+        return this;
     }
 
     public Boolean getDisabled() {
         return disabled;
     }
 
-    public void setDisabled(Boolean disabled) {
+    public ClassesTransferVo setDisabled(Boolean disabled) {
         this.disabled = disabled;
+        return this;
     }
 
     public Boolean getChecked() {
         return checked;
     }
 
-    public void setChecked(Boolean checked) {
+    public ClassesTransferVo setChecked(Boolean checked) {
         this.checked = checked;
+        return this;
     }
 }
