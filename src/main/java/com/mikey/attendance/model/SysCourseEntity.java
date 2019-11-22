@@ -1,6 +1,7 @@
 package com.mikey.attendance.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -22,9 +23,10 @@ public class SysCourseEntity {
     private Integer teacherId;
 
     @Transient
-    private List<SysClassesEntity> sysClassesEntities;
+    private List<SysClassesEntity> sysClassesEntities = new ArrayList<>();
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "course_id")
     public int getCourseId() {
         return courseId;

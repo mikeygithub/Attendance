@@ -22,6 +22,7 @@ public class SysUserEntity {
     private Integer userSex;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "user_id")
     public int getUserId() {
         return userId;

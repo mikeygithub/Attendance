@@ -128,7 +128,7 @@ public class ClassesAction extends ActionSupport implements ModelDriven<SysClass
      * 获取班级信息提供给课程的添加
      * @return
      */
-    public String getClasses(){
+    public String getClassesByCourseId(){
 
         r = classesService.getClasses(courseId);
 

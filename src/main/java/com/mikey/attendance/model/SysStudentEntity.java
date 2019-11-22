@@ -21,6 +21,7 @@ public class SysStudentEntity {
     private String studentPhone;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "student_id")
     public int getStudentId() {
         return studentId;

@@ -25,6 +25,7 @@ public class SysMenuEntity {
     private Set<SysMenuChildrenEntity> children;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
     public int getId() {
         return id;

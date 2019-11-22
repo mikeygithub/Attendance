@@ -20,6 +20,7 @@ public class BizCouOfClaEntity {
     private Integer classesId;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "boco_id")
     public int getBocoId() {
         return bocoId;
@@ -40,7 +41,7 @@ public class BizCouOfClaEntity {
     }
 
     @Basic
-    @Column(name = "classes")
+    @Column(name = "classes_id")
     public Integer getClassesId() {
         return classesId;
     }

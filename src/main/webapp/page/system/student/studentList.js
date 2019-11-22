@@ -53,16 +53,31 @@ layui.use(['form','layer','table','laytpl'],function(){
             type : 2,
             content : "studentAdd.html",
             success : function(layero, index){
-                var body = layui.layer.getChildFrame('body', index);
-                if(edit){
-                    body.find(".Id").val(edit.studentId);
-                    body.find(".studentName").val(edit.studentName);  //登录名
-                    body.find(".studentPhone").val(edit.studentPhone);  //登录名
-                    body.find(".studentCode").val(edit.studentCode);  //邮箱
-                    body.find(".studentSex input[value="+edit.studentSex+"]").prop("checked","checked");  //性别
-                    body.find(".updateFlag").val(1);//更新标识
+                var body = layui.layer.getChildFrame('body', index)
+                $.post("../../../biz/classes_getClassesByCourseId.action",{
+                    courseId : null  //将需要删除的newsId作为参数传入
+                },function(data){
+                    if (data.code === 0){
+                        //渲染班级下拉框
+                        for (var i = 0; i < data.classes.length; i++) {
+                            body.find(".classesId").append(new Option(data.classes[i].title,data.classes[i].value));
+                        }
+                        form.render('select');
+                    }else {
+                        layer.msg("获取班级数据失败");
+                    };
+                    if(edit){
+                        body.find(".Id").val(edit.studentId);
+                        body.find(".studentName").val(edit.studentName);  //登录名
+                        body.find(".studentPhone").val(edit.studentPhone);  //登录名
+                        body.find(".studentCode").val(edit.studentCode);  //邮箱
+                        body.find(".studentSex input[value="+edit.studentSex+"]").prop("checked","checked");  //性别
+                        body.find(".updateFlag").val(1);//更新标识
+                        // body.find(".classesId select[name=classesId]").next().find('dd[lay-value='+edit.class.classesId+']').click();
+                        // form.render();
+                    }
                     form.render();
-                }
+                })
             }
         })
         layui.layer.full(index);

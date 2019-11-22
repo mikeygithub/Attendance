@@ -3,8 +3,10 @@ package com.mikey.attendance.dao.course.impl;
 import com.mikey.attendance.common.PageBean;
 import com.mikey.attendance.dao.course.CourseDao;
 import com.mikey.attendance.model.BizCouOfClaEntity;
+import com.mikey.attendance.model.SysClassesEntity;
 import com.mikey.attendance.model.SysCollegeEntity;
 import com.mikey.attendance.model.SysCourseEntity;
+import com.mikey.attendance.vo.R;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -75,31 +77,59 @@ public class CourseDaoImpl implements CourseDao {
     }
 
     @Override
-    public PageBean findByPage(String key, PageBean<SysCourseEntity> pageBean) {
+    public PageBean findByPage(String key,Integer teacherId, PageBean<SysCourseEntity> pageBean) {
         Session session = sessionFactory.openSession();
 
-        Criteria criteria = session.createCriteria(SysCollegeEntity.class);
-
+        Criteria criteria = session.createCriteria(SysCourseEntity.class);
+        List list = null;
         if (key != null && !key.equals("")) {
             //搜索
-            List list = criteria.add(
+            list = criteria.add(
+                    Restrictions.and(Restrictions.eq("teacherId",teacherId),
                     Restrictions.or(
                             Restrictions.or(Restrictions.like("courseCode", key, MatchMode.ANYWHERE)),
-                            Restrictions.or(Restrictions.like("courseName", key, MatchMode.ANYWHERE))))
+                            Restrictions.or(Restrictions.like("courseName", key, MatchMode.ANYWHERE)))))
                     .setFirstResult((pageBean.getCurrPage() - 1) * pageBean.getPageSize() )
                     .setMaxResults((pageBean.getCurrPage() - 1) * pageBean.getPageSize() + pageBean.getPageSize()).list();
             pageBean.setRows(list);
         } else {
-            pageBean.setRows(
-                    criteria.setFirstResult((pageBean.getCurrPage() - 1) * pageBean.getPageSize())
-                            .setMaxResults((pageBean.getCurrPage() - 1) * pageBean.getPageSize() + pageBean.getPageSize()).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list());
+                list = criteria.add(Restrictions.eq("teacherId",teacherId)).
+                        setFirstResult((pageBean.getCurrPage() - 1) * pageBean.getPageSize())
+                            .setMaxResults((pageBean.getCurrPage() - 1) * pageBean.getPageSize() + pageBean.getPageSize())
+                        .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
         }
+        pageBean.setRows(getCourseClass(list));
+        //////////////////////查询班级///////////////////////
+
 
         pageBean.setTotal(Math.toIntExact((Long) criteria.setProjection(Projections.rowCount()).uniqueResult()));
+
         session.close();
 
         return pageBean;
     }
+
+    /**
+     * 查询课程对应的班级
+     * @param list
+     * @return
+     */
+    private List getCourseClass(List<SysCourseEntity> list){
+
+        ArrayList<SysCourseEntity> arrayList = new ArrayList<>();
+
+        for(SysCourseEntity courseEntity:list){
+            Criteria criteria = sessionFactory.getCurrentSession().createCriteria(BizCouOfClaEntity.class);
+            //课程对应的班级
+            List<BizCouOfClaEntity> classes = criteria.add(Restrictions.eq("courseId", courseEntity.getCourseId())).list();
+            for (BizCouOfClaEntity bizCouOfClaEntity:classes){
+                courseEntity.getSysClassesEntities().add((SysClassesEntity) sessionFactory.getCurrentSession().get(SysClassesEntity.class,bizCouOfClaEntity.getClassesId()));
+            }
+            arrayList.add(courseEntity);
+        }
+        return arrayList;
+    }
+
 
     @Override
     public void deleteBatch(String[] Ids) {

@@ -2,6 +2,7 @@ package com.mikey.attendance.dao.student.impl;
 
 import com.mikey.attendance.common.PageBean;
 import com.mikey.attendance.dao.student.StudentDao;
+import com.mikey.attendance.model.BizStuOfClaEntity;
 import com.mikey.attendance.model.SysStudentEntity;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate4.HibernateTemplate;
 import org.springframework.stereotype.Component;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,8 +35,12 @@ public class StudentDaoImpl implements StudentDao {
     private HibernateTemplate hibernateTemplate;
 
     @Override
-    public void save(SysStudentEntity studentEntity) {
-        sessionFactory.getCurrentSession().save(studentEntity);
+    public void save(SysStudentEntity studentEntity,Integer classId) {
+        Integer save = (Integer) sessionFactory.getCurrentSession().save(studentEntity);
+        BizStuOfClaEntity bizStuOfClaEntity = new BizStuOfClaEntity();
+        bizStuOfClaEntity.setClaId(classId);
+        bizStuOfClaEntity.setStuId(save);
+        sessionFactory.getCurrentSession().save(bizStuOfClaEntity);
     }
 
     @Override

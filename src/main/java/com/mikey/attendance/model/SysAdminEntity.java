@@ -22,6 +22,7 @@ public class SysAdminEntity {
     private String adminEmail;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "admin_id")
     public int getAdminId() {
         return adminId;

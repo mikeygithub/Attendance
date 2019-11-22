@@ -17,6 +17,7 @@ layui.use(['form','layer','transfer','util'],function(){
             courseId : updateFlag==='0'?null:$(".Id").val(),//id
             courseCode : $(".courseCode").val(),  //登录名
             courseName : $(".courseName").val(),  //邮箱
+            teacherId : window.sessionStorage.getItem("userId"),//教师用户id
             courseClasses: classes //授课班级
         },function(res){
             if (res.code === 0){
@@ -45,22 +46,8 @@ layui.use(['form','layer','transfer','util'],function(){
     var time = new Date();
     var submitTime = time.getFullYear()+'-'+filterTime(time.getMonth()+1)+'-'+filterTime(time.getDate())+' '+filterTime(time.getHours())+':'+filterTime(time.getMinutes())+':'+filterTime(time.getSeconds());
 
-
-    //穿梭
-    //模拟数据
-    var data1 = [
-        {"value": "1", "title": "李白"}
-        ,{"value": "2", "title": "杜甫"}
-        ,{"value": "3", "title": "苏轼"}
-        ,{"value": "4", "title": "李清照"}
-        ,{"value": "5", "title": "鲁迅", "disabled": true}
-        ,{"value": "6", "title": "巴金"}
-        ,{"value": "7", "title": "冰心"}
-        ,{"value": "8", "title": "矛盾"}
-        ,{"value": "9", "title": "贤心"}
-    ]
     //请求数据
-    $.post("../../../biz/classes_getClasses.action",{
+    $.post("../../../biz/classes_getClassesByCourseId.action",{
         courseId : $(".Id").val() //将需要删除的newsId作为参数传入
     },function(data){
         console.log(data)
@@ -75,9 +62,11 @@ layui.use(['form','layer','transfer','util'],function(){
                 onchange:function (data, index) {
                     console.log(data); //得到当前被穿梭的数据
                     console.log(index); //如果数据来自左边，index 为 0，否则为 1
-                    for (i=0;i<data.size;i++){
-                        data[i].value+","
+                    for (i=0;i<data.length;i++){
+                        classes+=data[i].value+",";
+                        console.log(classes);
                     }
+
                 }
             })
         }else {

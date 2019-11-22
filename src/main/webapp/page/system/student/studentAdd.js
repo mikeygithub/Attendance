@@ -14,6 +14,7 @@ layui.use(['form','layer'],function(){
             studentName : $(".studentName").val(),  //登录名
             studentPhone : $(".studentPhone").val(),  //
             studentCode : $(".studentCode").val(),  //邮箱
+            classId : $(".classesId option:selected").val(),  //班级
             studentSex : data.field.studentSex,
         },function(res){
             if (res.code === 0){

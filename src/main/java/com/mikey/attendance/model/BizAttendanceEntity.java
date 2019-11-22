@@ -23,6 +23,7 @@ public class BizAttendanceEntity {
     private Integer attendanceCasId;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "attendance_id")
     public int getAttendanceId() {
         return attendanceId;

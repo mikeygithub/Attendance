@@ -21,8 +21,8 @@ public class StudentServiceImpl implements StudentService {
     private StudentDao studentDao;
 
     @Override
-    public void save(SysStudentEntity studentEntity) {
-        studentDao.save(studentEntity);
+    public void save(SysStudentEntity studentEntity,Integer classId) {
+        studentDao.save(studentEntity,classId);
     }
 
     @Override

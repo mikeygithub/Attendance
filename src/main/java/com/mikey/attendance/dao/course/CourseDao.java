@@ -41,7 +41,7 @@ public interface CourseDao {
      * @param pageBean
      * @return
      */
-    public PageBean findByPage(String key, PageBean<SysCourseEntity> pageBean);
+    public PageBean findByPage(String key,Integer teacherId, PageBean<SysCourseEntity> pageBean);
 
     /**
      * 批量删除

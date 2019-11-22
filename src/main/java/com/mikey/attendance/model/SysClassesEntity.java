@@ -20,6 +20,7 @@ public class SysClassesEntity {
     private String classesCode;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "classes_id")
     public int getClassesId() {
         return classesId;

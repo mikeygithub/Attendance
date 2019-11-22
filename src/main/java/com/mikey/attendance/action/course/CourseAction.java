@@ -98,7 +98,7 @@ public class CourseAction extends ActionSupport implements ModelDriven<SysCourse
      */
     public String findByPage() {
 
-        PageBean byPage = courseService.findByPage(key, new PageBean<SysCourseEntity>().setCurrPage(page).setPageSize(limit));
+        PageBean byPage = courseService.findByPage(key,sysCourseEntity.getTeacherId(), new PageBean<SysCourseEntity>().setCurrPage(page).setPageSize(limit));
 
         r = R.ok().put("data", byPage.getRows()).put("count", byPage.getTotal());
 
@@ -183,6 +183,15 @@ public class CourseAction extends ActionSupport implements ModelDriven<SysCourse
     public void setIds(String ids) {
         this.ids = ids;
     }
-/////////////////////////////////////////
+
+    public String getCourseClasses() {
+        return courseClasses;
+    }
+
+    public void setCourseClasses(String courseClasses) {
+        this.courseClasses = courseClasses;
+    }
+
+    /////////////////////////////////////////
 
 }

@@ -49,8 +49,8 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public PageBean findByPage(String key, PageBean<SysCourseEntity> pageBean) {
-        return courseDao.findByPage(key,pageBean);
+    public PageBean findByPage(String key,Integer teacherId, PageBean<SysCourseEntity> pageBean) {
+        return courseDao.findByPage(key,teacherId,pageBean);
     }
 
     @Override

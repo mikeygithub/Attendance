@@ -14,7 +14,7 @@ public interface StudentDao {
     /**
      * 添加
      */
-    public void save(SysStudentEntity studentEntity);
+    public void save(SysStudentEntity studentEntity,Integer classId);
 
     /**
      * 删除

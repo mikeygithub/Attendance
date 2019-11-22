@@ -8,7 +8,7 @@ layui.use(['form','layer','table','laytpl'],function(){
     //用户列表
     var tableIns = table.render({
         elem: '#userList',
-        url : '../../../biz/course_findByPage.action?teacherId='+window.sessionStorage.getItem('userId'),
+        url : '../../../biz/attendance_findByPage.action',
         cellMinWidth : 95,
         page : true,
         height : "full-125",
@@ -17,18 +17,8 @@ layui.use(['form','layer','table','laytpl'],function(){
         id : "userListTable",
         cols : [[
             {type: "checkbox", fixed:"left", width:50},
-            {field: 'courseCode', title: '课程编号', align:'center'},
-            {field: 'courseName', title: '课程名称', minWidth:100, align:"center"},
-            {field: 'classesList', title: '所教班级',  align:'center',templet:function(d){
-                console.log(d);
-                var classes = "";
-                    for (var i = 0; i < d.sysClassesEntities.length; i++) {
-                        if (d.sysClassesEntities[i]!=null&&d.sysClassesEntities[i]!=""){
-                            classes+=d.sysClassesEntities[i].classesName+","
-                        }
-                    }
-                   return classes;
-                }},
+            {field: 'collegeCode', title: '学院编号', align:'center'},
+            {field: 'collegeName', title: '学院名称', minWidth:100, align:"center"},
             {title: '操作', minWidth:175, templet:'#userListBar',fixed:"right",align:"center"}
         ]],
         page: true
@@ -59,13 +49,13 @@ layui.use(['form','layer','table','laytpl'],function(){
         var index = layui.layer.open({
             title : "添加",
             type : 2,
-            content : "courseAdd.html",
+            content : "attendanceAdd.html",
             success : function(layero, index){
                 var body = layui.layer.getChildFrame('body', index);
                 if(edit){
-                    body.find(".Id").val(edit.courseId);
-                    body.find(".courseCode").val(edit.courseCode);  //登录名
-                    body.find(".courseName").val(edit.courseName);  //邮箱
+                    body.find(".Id").val(edit.collegeId);
+                    body.find(".collegeCode").val(edit.collegeCode);  //登录名
+                    body.find(".collegeName").val(edit.collegeName);  //邮箱
                     body.find(".updateFlag").val(1);//更新标识
                     form.render();
                 }
@@ -92,7 +82,7 @@ layui.use(['form','layer','table','laytpl'],function(){
                 newsId.push(data[i].collegeId);
             }
             layer.confirm('确定删除选中记录？', {icon: 3, title: '提示信息'}, function (index) {
-                $.post("../../../biz/college_delete.action",{
+                $.post("../../../biz/attendance_delete.action",{
                     ids : newsId.join(',') //将需要删除的newsId作为参数传入
                 },function(data){
                     if (data.code===0){
@@ -138,7 +128,7 @@ layui.use(['form','layer','table','laytpl'],function(){
             });
         }else if(layEvent === 'del'){ //删除
             layer.confirm('确定删除此记录？',{icon:3, title:'提示信息'},function(index){
-                $.get("../../../biz/course_delete.action",{
+                $.get("../../../biz/attendance_delete.action",{
                     collegeId : data.collegeId  //将需要删除的newsId作为参数传入
                 },function(data){
                     if (data.code === 0){

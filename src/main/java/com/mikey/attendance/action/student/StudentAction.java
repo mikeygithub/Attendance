@@ -38,7 +38,8 @@ public class StudentAction extends ActionSupport implements ModelDriven<SysStude
     private Integer limit;
     //批量删除id
     private String ids;
-
+    //班级id
+    private Integer classId;
     /////////////////////////////////////////
 
     /**
@@ -46,7 +47,7 @@ public class StudentAction extends ActionSupport implements ModelDriven<SysStude
      */
     public String save() {
 
-        studentService.save(studentEntity);
+        studentService.save(studentEntity,classId);
 
         r = R.ok();
 
@@ -180,6 +181,14 @@ public class StudentAction extends ActionSupport implements ModelDriven<SysStude
 
     public void setIds(String ids) {
         this.ids = ids;
+    }
+
+    public Integer getClassId() {
+        return classId;
+    }
+
+    public void setClassId(Integer classId) {
+        this.classId = classId;
     }
 
     @Override

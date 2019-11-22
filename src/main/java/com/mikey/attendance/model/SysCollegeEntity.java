@@ -20,6 +20,7 @@ public class SysCollegeEntity {
     private String collegeCode;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "college_id")
     public int getCollegeId() {
         return collegeId;

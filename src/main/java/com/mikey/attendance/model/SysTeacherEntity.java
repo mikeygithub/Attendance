@@ -22,6 +22,7 @@ public class SysTeacherEntity {
     private String teacherEmail;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "teacher_id")
     public int getTeacherId() {
         return teacherId;
