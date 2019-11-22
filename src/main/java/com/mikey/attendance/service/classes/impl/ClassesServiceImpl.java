@@ -53,7 +53,12 @@ public class ClassesServiceImpl implements ClassesService {
     }
 
     @Override
-    public R getClasses(String courseId) {
+    public R getClasses(Integer courseId) {
         return classesDao.getClasses(courseId);
+    }
+
+    @Override
+    public R getClassesByCourseId(Integer courseId) {
+        return classesDao.getClassesByCourseId(courseId);
     }
 }

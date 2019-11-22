@@ -38,7 +38,7 @@ public class ClassesAction extends ActionSupport implements ModelDriven<SysClass
     //批量删除id
     private String ids;
     //课程id
-    private String courseId;
+    private Integer courseId;
 
     /////////////////////////////////////////
 
@@ -134,8 +134,17 @@ public class ClassesAction extends ActionSupport implements ModelDriven<SysClass
 
         return SUCCESS;
     }
+    /**
+     * 获取班级信息提供给课程的添加
+     * @return
+     */
+    public String getClassesByCourseIdSimple() {
 
-    /////////////////////////////////////////
+        r = classesService.getClassesByCourseId(courseId);
+
+        return SUCCESS;
+    }
+        /////////////////////////////////////////
 
 
     public SysClassesEntity getClassesEntity() {
@@ -194,11 +203,11 @@ public class ClassesAction extends ActionSupport implements ModelDriven<SysClass
         this.ids = ids;
     }
 
-    public String getCourseId() {
+    public Integer getCourseId() {
         return courseId;
     }
 
-    public void setCourseId(String courseId) {
+    public void setCourseId(Integer courseId) {
         this.courseId = courseId;
     }
 

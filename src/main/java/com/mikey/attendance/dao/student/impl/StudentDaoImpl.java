@@ -4,6 +4,7 @@ import com.mikey.attendance.common.PageBean;
 import com.mikey.attendance.dao.student.StudentDao;
 import com.mikey.attendance.model.BizStuOfClaEntity;
 import com.mikey.attendance.model.SysStudentEntity;
+import com.mikey.attendance.util.SysConstant;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -110,5 +111,47 @@ public class StudentDaoImpl implements StudentDao {
 
         }
         hibernateTemplate.deleteAll(list);
+    }
+
+    /**
+     * 获取全部学生
+     * @param classId
+     * @param attendanceType
+     * @param number
+     * @return
+     */
+    @Override
+    public PageBean findByClassIdWithPage(Integer classId, Integer attendanceType, Integer number) {
+
+        List<SysStudentEntity> allStu = new ArrayList<>();
+
+        Session session = sessionFactory.openSession();
+
+        Criteria criteria = session.createCriteria(BizStuOfClaEntity.class);
+
+        List<BizStuOfClaEntity> claOfList = criteria.add(Restrictions.eq("claId", classId)).list();
+
+        for (BizStuOfClaEntity boc:claOfList){
+            allStu.add((SysStudentEntity) sessionFactory.getCurrentSession().get(SysStudentEntity.class,boc.getStuId()));
+        }
+        //随机抽取
+        if (SysConstant.EXTRACT_TYPE_RANDOM.equals(attendanceType)){
+            List<SysStudentEntity> extract = extract(allStu, number);
+        }else {//全部抽取
+
+        }
+        return null;
+    }
+
+    /**
+     * 抽取
+     * @param all
+     * @param number
+     * @return
+     */
+    private List<SysStudentEntity> extract(List<SysStudentEntity> all, Integer number){
+
+        return null;
+
     }
 }

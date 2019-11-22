@@ -50,5 +50,7 @@ public interface ClassesDao {
      */
     public void deleteBatch(String[] Ids);
 
-    R getClasses(String courseId);
+    R getClasses(Integer courseId);
+
+    R getClassesByCourseId(Integer courseId);
 }

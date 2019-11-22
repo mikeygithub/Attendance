@@ -40,6 +40,10 @@ public class StudentAction extends ActionSupport implements ModelDriven<SysStude
     private String ids;
     //班级id
     private Integer classId;
+    //抽取类型
+    private Integer attendanceType;
+    //抽取数量
+    private Integer number;
     /////////////////////////////////////////
 
     /**
@@ -107,6 +111,20 @@ public class StudentAction extends ActionSupport implements ModelDriven<SysStude
         return SUCCESS;
     }
 
+    /**
+     * 抽取学生
+     * @return
+     */
+    public String findByClassIdWithPage() {
+
+        PageBean byPage = studentService.findByClassIdWithPage(classId,attendanceType,number);
+
+        r = R.ok().put("data", byPage.getRows()).put("count", byPage.getTotal());
+
+        logger.info("查询列表：" + r);
+
+        return SUCCESS;
+    }
     /**
      * 批量删除
      */

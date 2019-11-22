@@ -115,7 +115,7 @@ public class ClassesDaoImpl implements ClassesDao {
      * @return
      */
     @Override
-    public R getClasses(String courseId) {
+    public R getClasses(Integer courseId) {
 
         Session session = sessionFactory.openSession();
         Criteria criteria = session.createCriteria(SysClassesEntity.class);
@@ -129,7 +129,7 @@ public class ClassesDaoImpl implements ClassesDao {
         Set<ClassesTransferVo> resultClass = new HashSet<>();
 
 
-        if (courseId==null||courseId=="") {
+        if (courseId==null||courseId.toString()=="") {
             allClass=criteria.list();
         }else {
             allClass=criteria.list();
@@ -155,5 +155,31 @@ public class ClassesDaoImpl implements ClassesDao {
         session.close();
 
         return R.ok().put("classes",resultClass);
+    }
+
+    /**
+     * 通过课程获取班级
+     * @param courseId
+     * @return
+     */
+    @Override
+    public R getClassesByCourseId(Integer courseId) {
+
+        Session session = sessionFactory.openSession();
+
+        //result
+        List<SysClassesEntity> allClass = new ArrayList<>();
+            Criteria crt = session.createCriteria(BizCouOfClaEntity.class);
+            List<BizCouOfClaEntity> cou_of_cla = crt.add(Restrictions.eq("courseId", courseId)).list();
+
+            for(BizCouOfClaEntity bizCouOfClaEntity:cou_of_cla){
+                //查询班级
+                SysClassesEntity sysClassesEntity = hibernateTemplate.get(SysClassesEntity.class, bizCouOfClaEntity.getClassesId());
+                allClass.add(sysClassesEntity);
+           }
+
+        session.close();
+
+        return R.ok().put("classes",allClass);
     }
 }

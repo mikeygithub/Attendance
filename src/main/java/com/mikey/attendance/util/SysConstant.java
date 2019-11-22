@@ -11,6 +11,10 @@ package com.mikey.attendance.util;
 
 public class SysConstant {
 
+    //全部抽取
+    public static final Integer EXTRACT_TYPE_ALL = 0;
+    //随机抽取
+    public static final Integer EXTRACT_TYPE_RANDOM = 1;
 
 
 }

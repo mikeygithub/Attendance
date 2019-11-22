@@ -48,4 +48,6 @@ public interface StudentService {
      * @param Ids
      */
     public void deleteBatch(String[] Ids);
+
+    PageBean findByClassIdWithPage(Integer classId, Integer attendanceType, Integer number);
 }

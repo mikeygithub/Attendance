@@ -50,4 +50,9 @@ public class StudentServiceImpl implements StudentService {
     public void deleteBatch(String[] Ids) {
         studentDao.deleteBatch(Ids);
     }
+
+    @Override
+    public PageBean findByClassIdWithPage(Integer classId, Integer attendanceType, Integer number) {
+        return studentDao.findByClassIdWithPage(classId,attendanceType,number);
+    }
 }

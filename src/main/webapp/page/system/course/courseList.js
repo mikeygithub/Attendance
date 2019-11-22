@@ -20,7 +20,6 @@ layui.use(['form','layer','table','laytpl'],function(){
             {field: 'courseCode', title: '课程编号', align:'center'},
             {field: 'courseName', title: '课程名称', minWidth:100, align:"center"},
             {field: 'classesList', title: '所教班级',  align:'center',templet:function(d){
-                console.log(d);
                 var classes = "";
                     for (var i = 0; i < d.sysClassesEntities.length; i++) {
                         if (d.sysClassesEntities[i]!=null&&d.sysClassesEntities[i]!=""){
