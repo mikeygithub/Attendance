@@ -3,6 +3,7 @@ package com.mikey.attendance.dao.classes.impl;
 import com.mikey.attendance.common.PageBean;
 import com.mikey.attendance.dao.classes.ClassesDao;
 import com.mikey.attendance.model.BizCouOfClaEntity;
+import com.mikey.attendance.model.BizStuOfClaEntity;
 import com.mikey.attendance.model.SysClassesEntity;
 import com.mikey.attendance.vo.ClassesTransferVo;
 import com.mikey.attendance.vo.R;
@@ -45,6 +46,11 @@ public class ClassesDaoImpl implements ClassesDao {
     @Override
     public void delete(SysClassesEntity classesEntity) {
         sessionFactory.getCurrentSession().delete(classesEntity);
+        //删除中间表
+        Criteria criteria = sessionFactory.getCurrentSession().createCriteria(BizStuOfClaEntity.class);
+        criteria.add(Restrictions.eq("claId",classesEntity.getClassesId())).list().forEach(v->{
+            sessionFactory.getCurrentSession().delete(v);
+        });
     }
 
     @Override

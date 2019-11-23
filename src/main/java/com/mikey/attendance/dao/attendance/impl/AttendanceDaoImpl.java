@@ -4,6 +4,7 @@ import com.mikey.attendance.common.PageBean;
 import com.mikey.attendance.dao.attendance.AttendanceDao;
 import com.mikey.attendance.model.BizAttendanceEntity;
 import com.mikey.attendance.model.SysCollegeEntity;
+import com.mikey.attendance.model.SysStudentEntity;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -69,25 +70,33 @@ public class AttendanceDaoImpl implements AttendanceDao {
 
     @Override
     public PageBean findByPage(String key, PageBean<BizAttendanceEntity> pageBean) {
+
+        ArrayList<BizAttendanceEntity> resultList = new ArrayList<>();
+
+        List<BizAttendanceEntity> list = new ArrayList<>();
+
         Session session = sessionFactory.openSession();
 
-        Criteria criteria = session.createCriteria(SysCollegeEntity.class);
+        Criteria criteria = session.createCriteria(BizAttendanceEntity.class);
 
         if (key != null && !key.equals("")) {
             //搜索
-            List list = criteria.add(
+            list = criteria.add(
                     Restrictions.or(
-                            Restrictions.or(Restrictions.like("collegesCode", key, MatchMode.ANYWHERE)),
-                            Restrictions.or(Restrictions.like("collegesName", key, MatchMode.ANYWHERE))))
+                            Restrictions.or(Restrictions.like("attendance_type",key, MatchMode.ANYWHERE)),
+                            Restrictions.or(Restrictions.like("attendance_time", key, MatchMode.ANYWHERE))))
                     .setFirstResult((pageBean.getCurrPage() - 1) * pageBean.getPageSize() )
                     .setMaxResults((pageBean.getCurrPage() - 1) * pageBean.getPageSize() + pageBean.getPageSize()).list();
-            pageBean.setRows(list);
         } else {
-            pageBean.setRows(
-                    criteria.setFirstResult((pageBean.getCurrPage() - 1) * pageBean.getPageSize())
-                            .setMaxResults((pageBean.getCurrPage() - 1) * pageBean.getPageSize() + pageBean.getPageSize()).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list());
+            list = criteria.setFirstResult((pageBean.getCurrPage() - 1) * pageBean.getPageSize())
+                    .setMaxResults((pageBean.getCurrPage() - 1) * pageBean.getPageSize() + pageBean.getPageSize()).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
         }
-
+        //查询对应的学生
+        list.forEach(v->{
+            v.setSysStudentEntity((SysStudentEntity) sessionFactory.getCurrentSession().get(SysStudentEntity.class,v.getAttendanceStuId()));
+            resultList.add(v);
+        });
+        pageBean.setRows(resultList);
         pageBean.setTotal(Math.toIntExact((Long) criteria.setProjection(Projections.rowCount()).uniqueResult()));
         session.close();
 

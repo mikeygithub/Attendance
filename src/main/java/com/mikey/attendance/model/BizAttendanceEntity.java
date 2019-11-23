@@ -21,6 +21,8 @@ public class BizAttendanceEntity {
     private Timestamp attendanceTime;
     private Integer attendanceStuId;
     private Integer attendanceCasId;
+    @Transient
+    private SysStudentEntity sysStudentEntity;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -83,6 +85,15 @@ public class BizAttendanceEntity {
                 Objects.equals(attendanceTime, that.attendanceTime) &&
                 Objects.equals(attendanceStuId, that.attendanceStuId) &&
                 Objects.equals(attendanceCasId, that.attendanceCasId);
+    }
+
+    @Transient
+    public SysStudentEntity getSysStudentEntity() {
+        return sysStudentEntity;
+    }
+
+    public void setSysStudentEntity(SysStudentEntity sysStudentEntity) {
+        this.sysStudentEntity = sysStudentEntity;
     }
 
     @Override

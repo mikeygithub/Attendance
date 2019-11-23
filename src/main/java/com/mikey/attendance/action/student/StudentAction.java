@@ -141,7 +141,15 @@ public class StudentAction extends ActionSupport implements ModelDriven<SysStude
         return SUCCESS;
     }
 
+    /**
+     * 获取数据给班级穿梭框
+     * @return
+     */
+    public String getStudentByClassId(){
 
+        r = R.ok().put("data",studentService.getStudentByClassId(classId));
+        return SUCCESS;
+    }
     /////////////////////////////////////////
 
 

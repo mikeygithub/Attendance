@@ -17,10 +17,28 @@ layui.use(['form','layer','table','laytpl'],function(){
         id : "userListTable",
         cols : [[
             {type: "checkbox", fixed:"left", width:50},
-            {field: 'collegeCode', title: '学院编号', align:'center'},
-            {field: 'collegeName', title: '学院名称', minWidth:100, align:"center"},
+            {field: 'attendanceId', title: 'ID', align:'center'},
+            {field: 'attendanceType', title: '类型', minWidth:100, align:"center",templet:function (d) {
+                switch (d.attendanceType) {
+                    case 0:return '<button type="button" class="layui-btn layui-btn-primary layui-btn-radius layui-btn-sm">正常</button>';
+                    case 1:return '<button type="button" class="layui-btn layui-btn-radius layui-btn-sm">迟到</button>';
+                    case 2:return '<button type="button" class="layui-btn layui-btn-normal layui-btn-radius layui-btn-sm">早退</button>';
+                    case 3:return '<button type="button" class="layui-btn layui-btn-warm layui-btn-radius layui-btn-sm">请假</button>';
+                    case 4:return '<button type="button" class="layui-btn layui-btn-danger layui-btn-radius layui-btn-sm">旷课</button>';
+                    }
+                }
+             },
+            {field: 'attendanceTime', title: '时间', minWidth:100, align:"center",templet:function (d) {
+                    if (d != null && d.attendanceTime != null&&d.attendanceTime!='') return d.attendanceTime.replace('T',' ');
+                }},
+            {field: 'attendanceStuId', title: '学生姓名', minWidth:100, align:"center",templet:function(d){
+                    if (d != null && d.sysStudentEntity != null&&d.sysStudentEntity!='') return d.sysStudentEntity.studentName;
+            }},
             {title: '操作', minWidth:175, templet:'#userListBar',fixed:"right",align:"center"}
         ]],
+        done:function(res,curr,count){
+          exportData=res.data;
+        },
         page: true
     });
 
@@ -142,5 +160,10 @@ layui.use(['form','layer','table','laytpl'],function(){
             });
         }
     });
-
+    //导出
+    form.on('submit(uploadImg)', function(data){
+       var loading = layer.load(1, {shade: [0.3, '#fff']});
+        table.exportFile(tableIns.config.id,exportData,'xls');
+        layer.close(loading);
+    });
 })

@@ -40,4 +40,31 @@ layui.use(['form','layer'],function(){
     var time = new Date();
     var submitTime = time.getFullYear()+'-'+filterTime(time.getMonth()+1)+'-'+filterTime(time.getDate())+' '+filterTime(time.getHours())+':'+filterTime(time.getMinutes())+':'+filterTime(time.getSeconds());
 
+    //穿梭框请求数据
+    $.post("../../../biz/classes_getStudentByClassId.action",{
+        classId : $(".Id").val() //将需要删除的newsId作为参数传入
+    },function(data){
+        console.log(data)
+        if (data.code===0){
+            //实例调用
+            transfer.render({
+                elem: '#students',
+                showSearch: true,
+                title: ['未选学生', '已选学生'],
+                data: data.classes,
+                id: 'studentsCon', //定义唯一索引
+                onchange:function (data, index) {
+                    console.log(data); //得到当前被穿梭的数据
+                    console.log(index); //如果数据来自左边，index 为 0，否则为 1
+                    for (i=0;i<data.length;i++){
+                        classes+=data[i].value+",";
+                        console.log(classes);
+                    }
+
+                }
+            })
+        }else {
+            layer.msg("获取数据失败");
+        }
+    })
 })

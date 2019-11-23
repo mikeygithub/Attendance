@@ -52,6 +52,11 @@ public class CourseDaoImpl implements CourseDao {
     @Override
     public void delete(SysCourseEntity sysCourseEntity) {
         sessionFactory.getCurrentSession().delete(sysCourseEntity);
+        //删除中间表
+        Criteria criteria = sessionFactory.getCurrentSession().createCriteria(BizCouOfClaEntity.class);
+        criteria.add(Restrictions.eq("courseId",sysCourseEntity.getCourseId())).list().forEach(v->{
+            sessionFactory.getCurrentSession().delete(v);
+        });
     }
 
     @Override

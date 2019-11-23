@@ -14,7 +14,7 @@ layui.use(['bodyTab','form','element','layer','jquery'],function(){
 			// url : "/MSOSLE_war/json/navs.json" //获取菜单json地址
 			url : "/Attendance_war/menu_getMenuByRoleType.action?roleTypes="+window.sessionStorage.getItem("roleType") //获取菜单json地址
 		});
-
+	$('.adminName').append(window.sessionStorage.getItem("loginAccount"));
 	//通过顶部菜单获取左侧二三级菜单   注：此处只做演示之用，实际开发中通过接口传参的方式获取导航数据
 	function getData(json){
 		$.getJSON(tab.tabConfig.url,function(data){
@@ -150,6 +150,7 @@ layui.use(['bodyTab','form','element','layer','jquery'],function(){
 			window.location.href = "/Attendance_war/index.html";
 		});
 	})
+
 })
 
 //打开新窗口
