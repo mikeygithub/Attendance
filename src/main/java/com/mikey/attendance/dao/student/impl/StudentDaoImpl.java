@@ -5,6 +5,8 @@ import com.mikey.attendance.dao.student.StudentDao;
 import com.mikey.attendance.model.BizStuOfClaEntity;
 import com.mikey.attendance.model.SysStudentEntity;
 import com.mikey.attendance.util.SysConstant;
+import com.mikey.attendance.vo.PageViewTransferVo;
+import com.mikey.attendance.vo.R;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -17,7 +19,9 @@ import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @Program: YoungVolunteer
@@ -166,4 +170,38 @@ public class StudentDaoImpl implements StudentDao {
         }
         return studentList;
     }
+
+    /**
+     * 查询穿梭框的数据
+     * @param classId
+     * @return
+     */
+    @Override
+    public List<PageViewTransferVo> getStudentByClassId(Integer classId) {
+        ArrayList<PageViewTransferVo> pageViewTransferVos = new ArrayList<>();
+        //班级为空查询全部
+        if (classId==null){
+            Criteria criteria = sessionFactory.getCurrentSession().createCriteria(SysStudentEntity.class);
+            criteria.list().forEach(v->{
+                pageViewTransferVos.add(new PageViewTransferVo().setTitle(((SysStudentEntity)v).getStudentName()).setValue(((SysStudentEntity)v).getStudentId()+"").setChecked(false).setDisabled(false));
+            });
+        }else {
+            //查询全部
+            List<SysStudentEntity> allStu = sessionFactory.getCurrentSession().createCriteria(SysStudentEntity.class).list();
+            //查询中间表
+            Criteria criteria = sessionFactory.getCurrentSession().createCriteria(BizStuOfClaEntity.class);
+            //当前班级对应的学生中间表
+            criteria.add(Restrictions.eq("claId",classId)).list().forEach(v->{
+                SysStudentEntity stu = (SysStudentEntity) sessionFactory.getCurrentSession().get(SysStudentEntity.class, ((SysStudentEntity) v).getStudentId());
+                allStu.remove(stu);
+                pageViewTransferVos.add(new PageViewTransferVo().setTitle(stu.getStudentName()).setValue(String.valueOf(stu.getStudentId())).setChecked(true).setDisabled(false));
+            });
+            allStu.forEach(v->{
+                pageViewTransferVos.add(new PageViewTransferVo().setTitle(v.getStudentName()).setValue(String.valueOf(v.getStudentId())).setChecked(false).setDisabled(false));
+            });
+        }
+
+        return pageViewTransferVos;
+    }
+
 }

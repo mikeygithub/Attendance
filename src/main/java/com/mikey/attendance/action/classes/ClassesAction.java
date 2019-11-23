@@ -39,6 +39,8 @@ public class ClassesAction extends ActionSupport implements ModelDriven<SysClass
     private String ids;
     //课程id
     private Integer courseId;
+    //学生
+    private String students;
 
     /////////////////////////////////////////
 
@@ -47,7 +49,7 @@ public class ClassesAction extends ActionSupport implements ModelDriven<SysClass
      */
     public String save() {
 
-        classesService.save(classesEntity);
+        classesService.save(classesEntity,students);
 
         r = R.ok();
 
@@ -215,4 +217,13 @@ public class ClassesAction extends ActionSupport implements ModelDriven<SysClass
     public SysClassesEntity getModel() {
         return classesEntity;
     }
+
+    public String getStudents() {
+        return students;
+    }
+
+    public void setStudents(String students) {
+        this.students = students;
+    }
+
 }

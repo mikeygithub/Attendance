@@ -4,8 +4,11 @@ import com.mikey.attendance.common.PageBean;
 import com.mikey.attendance.dao.student.StudentDao;
 import com.mikey.attendance.model.SysStudentEntity;
 import com.mikey.attendance.service.student.StudentService;
+import com.mikey.attendance.vo.PageViewTransferVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @Program: YoungVolunteer
@@ -54,5 +57,10 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public PageBean findByClassIdWithPage(Integer classId, Integer attendanceType, Integer number) {
         return studentDao.findByClassIdWithPage(classId,attendanceType,number);
+    }
+
+    @Override
+    public List<PageViewTransferVo> getStudentByClassId(Integer classId) {
+        return studentDao.getStudentByClassId(classId);
     }
 }

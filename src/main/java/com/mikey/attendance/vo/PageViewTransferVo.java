@@ -11,7 +11,7 @@ import java.io.Serializable;
  * @Description: 用于课程添加的时候所需要的JSON数据格式
  **/
 
-public class ClassesTransferVo implements Serializable {
+public class PageViewTransferVo implements Serializable {
 
     private String value;
     private String title;
@@ -22,7 +22,7 @@ public class ClassesTransferVo implements Serializable {
         return value;
     }
 
-    public ClassesTransferVo setValue(String value) {
+    public PageViewTransferVo setValue(String value) {
         this.value = value;
         return this;
     }
@@ -31,7 +31,7 @@ public class ClassesTransferVo implements Serializable {
         return title;
     }
 
-    public ClassesTransferVo setTitle(String title) {
+    public PageViewTransferVo setTitle(String title) {
         this.title = title;
         return this;
     }
@@ -40,7 +40,7 @@ public class ClassesTransferVo implements Serializable {
         return disabled;
     }
 
-    public ClassesTransferVo setDisabled(Boolean disabled) {
+    public PageViewTransferVo setDisabled(Boolean disabled) {
         this.disabled = disabled;
         return this;
     }
@@ -49,7 +49,7 @@ public class ClassesTransferVo implements Serializable {
         return checked;
     }
 
-    public ClassesTransferVo setChecked(Boolean checked) {
+    public PageViewTransferVo setChecked(Boolean checked) {
         this.checked = checked;
         return this;
     }

@@ -5,7 +5,7 @@ import com.mikey.attendance.dao.classes.ClassesDao;
 import com.mikey.attendance.model.BizCouOfClaEntity;
 import com.mikey.attendance.model.BizStuOfClaEntity;
 import com.mikey.attendance.model.SysClassesEntity;
-import com.mikey.attendance.vo.ClassesTransferVo;
+import com.mikey.attendance.vo.PageViewTransferVo;
 import com.mikey.attendance.vo.R;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -17,10 +17,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate4.HibernateTemplate;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.io.Serializable;
+import java.util.*;
 
 /**
  * @Program: YoungVolunteer
@@ -39,8 +37,16 @@ public class ClassesDaoImpl implements ClassesDao {
     private HibernateTemplate hibernateTemplate;
 
     @Override
-    public void save(SysClassesEntity classesEntity) {
-        sessionFactory.getCurrentSession().save(classesEntity);
+    public void save(SysClassesEntity classesEntity,String studentIds) {
+        Integer save = (Integer) sessionFactory.getCurrentSession().save(classesEntity);
+        //保存中间表
+        String[] split = studentIds.split(",");
+        Arrays.stream(split).forEach(v->{
+                BizStuOfClaEntity boc = new BizStuOfClaEntity();
+                boc.setStuId(Integer.parseInt(v));
+                boc.setClaId(save);
+                sessionFactory.getCurrentSession().save(boc);
+        });
     }
 
     @Override
@@ -126,13 +132,13 @@ public class ClassesDaoImpl implements ClassesDao {
         Session session = sessionFactory.openSession();
         Criteria criteria = session.createCriteria(SysClassesEntity.class);
 
-        List<ClassesTransferVo> list = new ArrayList<>();
+        List<PageViewTransferVo> list = new ArrayList<>();
         //result
         List<SysClassesEntity> allClass = new ArrayList<>();
         //已经选择的class
         List<SysClassesEntity> selectClass = new ArrayList<>();
         //all
-        Set<ClassesTransferVo> resultClass = new HashSet<>();
+        Set<PageViewTransferVo> resultClass = new HashSet<>();
 
 
         if (courseId==null||courseId.toString()=="") {
@@ -152,10 +158,10 @@ public class ClassesDaoImpl implements ClassesDao {
 
         }
         for(SysClassesEntity s:selectClass){
-            resultClass.add(new ClassesTransferVo().setValue(s.getClassesId()+"").setTitle(s.getClassesName()).setChecked(false).setDisabled(false));
+            resultClass.add(new PageViewTransferVo().setValue(s.getClassesId()+"").setTitle(s.getClassesName()).setChecked(false).setDisabled(false));
         }
         for(SysClassesEntity s:allClass){
-            resultClass.add(new ClassesTransferVo().setValue(s.getClassesId()+"").setTitle(s.getClassesName()).setChecked(true).setDisabled(false));
+            resultClass.add(new PageViewTransferVo().setValue(s.getClassesId()+"").setTitle(s.getClassesName()).setChecked(true).setDisabled(false));
         }
 
         session.close();

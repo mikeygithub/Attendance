@@ -22,8 +22,8 @@ public class ClassesServiceImpl implements ClassesService {
     private ClassesDao classesDao;
 
     @Override
-    public void save(SysClassesEntity classesEntity) {
-        classesDao.save(classesEntity);
+    public void save(SysClassesEntity classesEntity,String studentIds) {
+        classesDao.save(classesEntity,studentIds);
     }
 
     @Override
