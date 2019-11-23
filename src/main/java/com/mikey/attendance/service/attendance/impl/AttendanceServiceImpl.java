@@ -7,6 +7,8 @@ import com.mikey.attendance.service.attendance.AttendanceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+
 /**
  * @Program: YoungVolunteer
  * @Author: 麦奇
@@ -54,5 +56,10 @@ public class AttendanceServiceImpl implements AttendanceService {
     @Override
     public void deleteBatch(String[] Ids) {
         attendanceDao.deleteBatch(Ids);
+    }
+
+    @Override
+    public void saveByBatch(ArrayList<BizAttendanceEntity> bizAttendanceEntities) {
+        attendanceDao.saveByBatch(bizAttendanceEntities);
     }
 }

@@ -209,6 +209,22 @@ public class StudentAction extends ActionSupport implements ModelDriven<SysStude
         this.classId = classId;
     }
 
+    public Integer getAttendanceType() {
+        return attendanceType;
+    }
+
+    public void setAttendanceType(Integer attendanceType) {
+        this.attendanceType = attendanceType;
+    }
+
+    public Integer getNumber() {
+        return number;
+    }
+
+    public void setNumber(Integer number) {
+        this.number = number;
+    }
+
     @Override
     public SysStudentEntity getModel() {
         return studentEntity;

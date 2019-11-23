@@ -122,7 +122,7 @@ public class StudentDaoImpl implements StudentDao {
      */
     @Override
     public PageBean findByClassIdWithPage(Integer classId, Integer attendanceType, Integer number) {
-
+        //班级id为classId的所有学生
         List<SysStudentEntity> allStu = new ArrayList<>();
 
         Session session = sessionFactory.openSession();
@@ -131,27 +131,39 @@ public class StudentDaoImpl implements StudentDao {
 
         List<BizStuOfClaEntity> claOfList = criteria.add(Restrictions.eq("claId", classId)).list();
 
-        for (BizStuOfClaEntity boc:claOfList){
-            allStu.add((SysStudentEntity) sessionFactory.getCurrentSession().get(SysStudentEntity.class,boc.getStuId()));
-        }
-        //随机抽取
-        if (SysConstant.EXTRACT_TYPE_RANDOM.equals(attendanceType)){
-            List<SysStudentEntity> extract = extract(allStu, number);
-        }else {//全部抽取
+        claOfList.forEach(v->{
+            allStu.add((SysStudentEntity) sessionFactory.getCurrentSession().get(SysStudentEntity.class,v.getStuId()));
+        });
 
+        PageBean<SysStudentEntity> pageBean = new PageBean<>();
+        //随机抽取
+        if (SysConstant.EXTRACT_TYPE_RANDOM.equals(attendanceType)&&number!=allStu.size()){
+            List<SysStudentEntity> extract = extract(allStu, number);
+            pageBean.setRows(extract).setTotal(extract.size());
+        }else {//全部抽取
+            pageBean.setRows(allStu).setTotal(allStu.size());
         }
-        return null;
+        return pageBean;
     }
 
     /**
-     * 抽取
-     * @param all
+     * 随机抽取
+     * @param allStu
      * @param number
      * @return
      */
-    private List<SysStudentEntity> extract(List<SysStudentEntity> all, Integer number){
-
-        return null;
-
+    private List<SysStudentEntity> extract(List<SysStudentEntity> allStu, Integer number){
+        //返回结果
+        List<SysStudentEntity> studentList = new ArrayList<>();
+        //抽取
+        for (int i = 0; i < (number>allStu.size()?allStu.size():number); i++) {
+            //获取0-allStu.length的随机数
+            int random = (int)(Math.random()*allStu.size());
+            //添加学生,随机获取下标为random的学生并且把它添加到要传回页面的list里面
+            studentList.add(allStu.get(random));
+            //将本次已经抽取过的学生从预抽取的list里面移除
+            allStu.remove(random);
+        }
+        return studentList;
     }
 }

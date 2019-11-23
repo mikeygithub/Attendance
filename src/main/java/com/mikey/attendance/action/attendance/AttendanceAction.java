@@ -1,5 +1,9 @@
 package com.mikey.attendance.action.attendance;
 
+import com.alibaba.fastjson.JSONObject;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mikey.attendance.common.PageBean;
 import com.mikey.attendance.model.BizAttendanceEntity;
 import com.mikey.attendance.service.attendance.AttendanceService;
@@ -8,6 +12,10 @@ import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -37,6 +45,12 @@ public class AttendanceAction extends ActionSupport implements ModelDriven<BizAt
     private Integer limit;
     //批量删除id
     private String ids;
+    /**
+     * 批量接收要保存的数据
+     */
+//    private ArrayList<BizAttendanceEntity> bizAttendanceEntities = new ArrayList<>();
+    private String bizAttendanceEntities;
+
 
     /////////////////////////////////////////
 
@@ -52,6 +66,24 @@ public class AttendanceAction extends ActionSupport implements ModelDriven<BizAt
         return SUCCESS;
     }
 
+    /**
+     * 批量保存
+     * @return
+     */
+    public String saveByBatch() throws IOException {
+
+        final ObjectMapper mapper = new ObjectMapper();
+
+        mapper.configure(DeserializationFeature.FAIL_ON_IGNORED_PROPERTIES,false);
+
+        List<BizAttendanceEntity> list = mapper.readValue(bizAttendanceEntities, new TypeReference<List<BizAttendanceEntity>>(){});
+
+        attendanceService.saveByBatch((ArrayList<BizAttendanceEntity>) list);
+
+        r = R.ok();
+
+        return SUCCESS;
+    }
     /**
      * 删除
      */
@@ -176,4 +208,11 @@ public class AttendanceAction extends ActionSupport implements ModelDriven<BizAt
         this.ids = ids;
     }
 
+    public String getBizAttendanceEntities() {
+        return bizAttendanceEntities;
+    }
+
+    public void setBizAttendanceEntities(String bizAttendanceEntities) {
+        this.bizAttendanceEntities = bizAttendanceEntities;
+    }
 }

@@ -40,6 +40,7 @@ layui.use(['form','layer','table','laytpl'],function(){
                 layer.msg("获取班级数据失败");
             };
             form.render();
+            table.render();
         })
     })
 
@@ -59,7 +60,15 @@ layui.use(['form','layer','table','laytpl'],function(){
             {field: 'studentName', title: '姓名', minWidth:100, align:"center"},
             {field: 'studentCode', title: '学生编号',minWidth:100, align:'center'},
             {field: 'studentPhone', title: '联系电话', minWidth:100, align:'center'},
-            {title: '操作', minWidth:175, templet:'#userListBar',fixed:"right",align:"center"}
+            {field: 'attendanceType', title: '操作', minWidth:200, align:'center',templet:function(d){
+                    return '<div class="layui-btn-container">'+
+                        '<input name="attendance_type'+d.studentId+'" type="radio" value="0" title="正常" checked="checked">' +
+                        '<input name="attendance_type'+d.studentId+'" type="radio" value="1" title="迟到">' +
+                        '<input name="attendance_type'+d.studentId+'" type="radio" value="2" title="早退">' +
+                        '<input name="attendance_type'+d.studentId+'" type="radio"  value="3" title="请假">' +
+                        '<input name="attendance_type'+d.studentId+'" type="radio" value="4" title="旷课"></div';
+            }},
+            // {title: '操作', minWidth:175, templet:'#userListBar',fixed:"right",align:"center"}
         ]],
         page: true
     });
@@ -73,7 +82,7 @@ layui.use(['form','layer','table','laytpl'],function(){
                     curr: 1 //重新从第 1 页开始
                 },
                 where: {
-                    classesId: $(".classesId").val(),
+                    classId: $(".classesId").val(),
                     attendanceType: $(".attendance_type").val(),
                     number: $(".number").val()
                 }
@@ -84,104 +93,34 @@ layui.use(['form','layer','table','laytpl'],function(){
             layer.msg("请选择好数据！",{icon:2});
         }
     });
-    //
-    // //添加用户
-    // function addUser(edit){
-    //     var index = layui.layer.open({
-    //         title : "添加",
-    //         type : 2,
-    //         content : "attendanceAdd.html",
-    //         success : function(layero, index){
-    //             var body = layui.layer.getChildFrame('body', index);
-    //             if(edit){
-    //                 body.find(".Id").val(edit.collegeId);
-    //                 body.find(".collegeCode").val(edit.collegeCode);  //登录名
-    //                 body.find(".collegeName").val(edit.collegeName);  //邮箱
-    //                 body.find(".updateFlag").val(1);//更新标识
-    //                 form.render();
-    //             }
-    //         }
-    //     })
-    //     layui.layer.full(index);
-    //     window.sessionStorage.setItem("index",index);
-    //     //改变窗口大小时，重置弹窗的宽高，防止超出可视区域（如F12调出debug的操作）
-    //     $(window).on("resize",function(){
-    //         layui.layer.full(window.sessionStorage.getItem("index"));
-    //     })
-    // }
-    // $(".addNews_btn").click(function(){
-    //     addUser();
-    // })
-    //
-    // //批量删除
-    // $(".delAll_btn").click(function(){
-    //     var checkStatus = table.checkStatus('userListTable'),
-    //         data = checkStatus.data,
-    //         newsId = [];
-    //     if(data.length > 0) {
-    //         for (var i in data) {
-    //             newsId.push(data[i].collegeId);
-    //         }
-    //         layer.confirm('确定删除选中记录？', {icon: 3, title: '提示信息'}, function (index) {
-    //             $.post("../../../biz/attendance_delete.action",{
-    //                 ids : newsId.join(',') //将需要删除的newsId作为参数传入
-    //             },function(data){
-    //                 if (data.code===0){
-    //                     layer.msg("删除成功");
-    //                 }else {
-    //                     layer.msg("删除失败");
-    //                 }
-    //             tableIns.reload();
-    //             layer.close(index);
-    //             })
-    //         })
-    //     }else{
-    //         layer.msg("请选择需要删除的用户");
-    //     }
-    // })
-    //
-    // //列表操作
-    // table.on('tool(userList)', function(obj){
-    //     var layEvent = obj.event,
-    //         data = obj.data;
-    //
-    //     if(layEvent === 'edit'){ //编辑
-    //         addUser(data);
-    //     }else if(layEvent === 'usable'){ //启用禁用
-    //         var _this = $(this),
-    //             usableText = "是否确定禁用此用户？",
-    //             btnText = "已禁用";
-    //         if(_this.text()=="已禁用"){
-    //             usableText = "是否确定启用此用户？",
-    //             btnText = "已启用";
-    //         }
-    //         layer.confirm(usableText,{
-    //             icon: 3,
-    //             title:'系统提示',
-    //             cancel : function(index){
-    //                 layer.close(index);
-    //             }
-    //         },function(index){
-    //             _this.text(btnText);
-    //             layer.close(index);
-    //         },function(index){
-    //             layer.close(index);
-    //         });
-    //     }else if(layEvent === 'del'){ //删除
-    //         layer.confirm('确定删除此记录？',{icon:3, title:'提示信息'},function(index){
-    //             $.get("../../../biz/attendance_delete.action",{
-    //                 collegeId : data.collegeId  //将需要删除的newsId作为参数传入
-    //             },function(data){
-    //                 if (data.code === 0){
-    //                     layer.msg("删除成功");
-    //                 }else {
-    //                     layer.msg("删除失败");
-    //                 }
-    //                 tableIns.reload();
-    //                 layer.close(index);
-    //             })
-    //         });
-    //     }
-    // });
+    //批量删除
+    $(".attendance_save").click(function(){
+        //attendance_stu_id
+        //attendance_type
+        //attendance_cas_id
+        var attendance_cas_id = $(".courseId").val();
 
+        var allStu = new Array();
+        //获取缺勤类型
+        layui.table.cache["userListTable"].forEach(item =>{
+            var att = {attendanceType:$('input[name=attendance_type'+item.studentId+']:checked').val(),attendanceStuId:item.studentId,attendanceCasId:attendance_cas_id};
+            allStu.push(att);
+        });
+
+        console.log(allStu);
+
+        layer.confirm('确定保存？', {icon: 3, title: '提示信息'}, function (index) {
+            $.post("../../../biz/attendance_saveByBatch.action",{
+                bizAttendanceEntities : JSON.stringify(allStu)
+            },function(data){
+                if (data.code===0){
+                    layer.msg("保存成功");
+                }else {
+                    layer.msg("保存失败");
+                }
+                tableIns.reload();
+                layer.close(index);
+            })
+        })
+    })
 })

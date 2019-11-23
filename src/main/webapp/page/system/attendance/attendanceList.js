@@ -103,7 +103,7 @@ layui.use(['form','layer','table','laytpl'],function(){
     table.on('tool(userList)', function(obj){
         var layEvent = obj.event,
             data = obj.data;
-
+        console.log(layEvent)
         if(layEvent === 'edit'){ //编辑
             addUser(data);
         }else if(layEvent === 'usable'){ //启用禁用

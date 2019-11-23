@@ -14,7 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate4.HibernateTemplate;
 import org.springframework.stereotype.Component;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -102,5 +104,13 @@ public class AttendanceDaoImpl implements AttendanceDao {
             list.add(collegesEntity);
         }
         hibernateTemplate.deleteAll(list);
+    }
+
+    @Override
+    public void saveByBatch(ArrayList<BizAttendanceEntity> bizAttendanceEntities) {
+        bizAttendanceEntities.forEach(v->{
+            v.setAttendanceTime(new Timestamp(System.currentTimeMillis()));
+            sessionFactory.getCurrentSession().save(v);
+        });
     }
 }

@@ -3,6 +3,8 @@ package com.mikey.attendance.service.attendance;
 import com.mikey.attendance.common.PageBean;
 import com.mikey.attendance.model.BizAttendanceEntity;
 
+import java.util.ArrayList;
+
 /**
  * @Program: YoungVolunteer
  * @Author: 麦奇
@@ -48,4 +50,6 @@ public interface AttendanceService {
      * @param Ids
      */
     public void deleteBatch(String[] Ids);
+
+    void saveByBatch(ArrayList<BizAttendanceEntity> bizAttendanceEntities);
 }
