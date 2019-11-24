@@ -8,7 +8,7 @@ layui.use(['form','layer','table','laytpl'],function(){
     //用户列表
     var tableIns = table.render({
         elem: '#userList',
-        url : '../../../biz/student_findByPage.action',
+        url : '../../../biz/teacher_findByPage.action',
         cellMinWidth : 95,
         page : true,
         height : "full-125",
@@ -17,10 +17,11 @@ layui.use(['form','layer','table','laytpl'],function(){
         id : "userListTable",
         cols : [[
             {type: "checkbox", fixed:"left", width:50},
-            {field: 'studentId', title: '编号', align:'center'},
-            {field: 'studentCode', title: '学号', align:'center'},
-            {field: 'studentName', title: '姓名', align:'center'},
-            {field: 'studentPhone', title: '电话', align:'center'},
+            {field: 'teacherId', title: '编号', align:'center'},
+            {field: 'teacherCode', title: '工号', align:'center'},
+            {field: 'teacherName', title: '姓名', align:'center'},
+            {field: 'teacherPhone', title: '电话', align:'center'},
+            {field: 'teacherEmail', title: '邮箱', align:'center'},
             {title: '操作', minWidth:175, templet:'#userListBar',fixed:"right",align:"center"}
         ]],
         page: true
@@ -55,11 +56,12 @@ layui.use(['form','layer','table','laytpl'],function(){
             success : function(layero, index){
                 var body = layui.layer.getChildFrame('body', index)
                     if(edit){
-                        body.find(".Id").val(edit.studentId);
-                        body.find(".studentName").val(edit.studentName);  //登录名
-                        body.find(".studentPhone").val(edit.studentPhone);  //登录名
-                        body.find(".studentCode").val(edit.studentCode);  //邮箱
-                        body.find(".studentSex input[value="+edit.studentSex+"]").prop("checked","checked");  //性别
+                        body.find(".Id").val(edit.teacherId);
+                        body.find(".teacherName").val(edit.teacherName);  //登录名
+                        body.find(".teacherPhone").val(edit.teacherPhone);  //登录名
+                        body.find(".teacherCode").val(edit.teacherCode);  //邮箱
+                        body.find(".teacherEmail").val(edit.teacherEmail);  //邮箱
+                        body.find(".teacherSex input[value="+edit.teacherSex+"]").prop("checked","checked");  //性别
                         body.find(".updateFlag").val(1);//更新标识
                     }
                     form.render();
@@ -83,10 +85,10 @@ layui.use(['form','layer','table','laytpl'],function(){
             newsId = [];
         if(data.length > 0) {
             for (var i in data) {
-                newsId.push(data[i].studentId);
+                newsId.push(data[i].teacherId);
             }
             layer.confirm('确定删除选中记录？', {icon: 3, title: '提示信息'}, function (index) {
-                $.post("../../../biz/student_deleteBatch.action",{
+                $.post("../../../biz/teacher_deleteBatch.action",{
                     ids : newsId.join(',') //将需要删除的newsId作为参数传入
                 },function(data){
                     if (data.code===0){
@@ -132,8 +134,8 @@ layui.use(['form','layer','table','laytpl'],function(){
             });
         }else if(layEvent === 'del'){ //删除
             layer.confirm('确定删除此记录？',{icon:3, title:'提示信息'},function(index){
-                $.get("../../../biz/student_delete.action",{
-                    studentId : data.studentId  //将需要删除的newsId作为参数传入
+                $.get("../../../biz/teacher_delete.action",{
+                    teacherId : data.teacherId  //将需要删除的newsId作为参数传入
                 },function(data){
                     if (data.code === 0){
                         layer.msg("删除成功");

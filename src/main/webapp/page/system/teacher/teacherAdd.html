@@ -15,23 +15,29 @@
 <body class="childrenBody">
 <form class="layui-form" style="width:80%;">
     <div class="layui-form-item layui-row layui-col-xs12">
-        <label class="layui-form-label">学号</label>
+        <label class="layui-form-label">工号</label>
         <div class="layui-input-block">
             <input type="hidden" class="layui-input updateFlag" value="0"><!--更新-->
             <input type="hidden" class="layui-input Id">
-            <input type="text" class="layui-input studentCode" lay-verify="required" placeholder="请输入学号">
+            <input type="text" class="layui-input teacherCode" lay-verify="required" placeholder="请输入工号">
         </div>
     </div>
     <div class="layui-form-item layui-row layui-col-xs12">
         <label class="layui-form-label">姓名</label>
         <div class="layui-input-block">
-            <input type="text" class="layui-input studentName" lay-verify="required" placeholder="请输入姓名">
+            <input type="text" class="layui-input teacherName" lay-verify="required" placeholder="请输入姓名">
         </div>
     </div>
     <div class="layui-form-item layui-row layui-col-xs12">
         <label class="layui-form-label">联系方式</label>
         <div class="layui-input-block">
-            <input type="text" class="layui-input studentPhone" lay-verify="required" placeholder="请输入联系方式">
+            <input type="text" class="layui-input teacherPhone" lay-verify="required" placeholder="请输入联系方式">
+        </div>
+    </div>
+    <div class="layui-form-item layui-row layui-col-xs12">
+        <label class="layui-form-label">邮箱</label>
+        <div class="layui-input-block">
+            <input type="text" class="layui-input teacherEmail" lay-verify="required" placeholder="请输入邮箱">
         </div>
     </div>
 <!--    <div class="layui-form-item layui-inline">-->
@@ -52,9 +58,9 @@
 <!--    </div>-->
     <div class="layui-form-item">
         <label class="layui-form-label">性别</label>
-        <div class="layui-input-block studentSex" id="studentSex">
-            <input type="radio" name="studentSex" value="1" title="男">
-            <input type="radio" name="studentSex" value="2" title="女">
+        <div class="layui-input-block teacherSex" id="teacherSex">
+            <input type="radio" name="teacherSex" value="1" title="男">
+            <input type="radio" name="teacherSex" value="2" title="女">
         </div>
     </div>
     </div>
@@ -66,6 +72,6 @@
     </div>
 </form>
 <script type="text/javascript" src="/Attendance_war/layui/layui.js"></script>
-<script type="text/javascript" src="studentAdd.js"></script>
+<script type="text/javascript" src="teacherAdd.js"></script>
 </body>
 </html>

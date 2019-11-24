@@ -20,6 +20,7 @@ public class BizStuOfClaEntity {
     private Integer claId;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "bsoc_id")
     public int getBsocId() {
         return bsocId;

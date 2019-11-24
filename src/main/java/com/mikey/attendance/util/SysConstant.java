@@ -29,4 +29,17 @@ public class SysConstant {
     public static final Integer ATTENDANCE_TYPE_LEAVE = 3;
     public static final Integer ATTENDANCE_TYPE_TRUANCY = 4;
 
+    /**
+     * 默认登入密码
+     */
+    public static final String DEFAULT_PASSWORD = "123456";
+    /**
+     * 用户类型1：管理员,2:教师,3：学生
+     */
+    public static final Integer USER_TYPE_STUDENT = 3;
+    public static final Integer USER_TYPE_TEACHER = 2;
+    public static final Integer USER_TYPE_ADMIN = 1;
+
+    public static final Integer SEX_MAN = 1;
+    public static final Integer SEX_WOMAN = 2;
 }

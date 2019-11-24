@@ -15,6 +15,12 @@
 				<param name="root">r</param>
 			</result>
 		</action>
+		<!--教师-->
+		<action name="teacher_*" class="com.mikey.attendance.action.teacher.TeacherAction" method="{1}">
+			<result name="success" type="json">
+				<param name="root">r</param>
+			</result>
+		</action>
 		<!--班级-->
 		<action name="classes_*" class="com.mikey.attendance.action.classes.ClassesAction" method="{1}">
 			<result name="success" type="json">

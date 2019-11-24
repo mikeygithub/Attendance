@@ -25,7 +25,7 @@ public interface ClassesDao {
     /**
      * 修改
      */
-    public void update(SysClassesEntity classesEntity);
+    public void update(SysClassesEntity classesEntity, String stuIds);
 
     /**
      * 查询

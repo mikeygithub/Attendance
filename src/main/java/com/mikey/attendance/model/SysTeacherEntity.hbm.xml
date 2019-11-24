@@ -10,5 +10,6 @@
         <property name="teacherCode" column="teacher_code"/>
         <property name="teacherPhone" column="teacher_phone"/>
         <property name="teacherEmail" column="teacher_email"/>
+        <property name="userId" column="user_id"/>
     </class>
 </hibernate-mapping>

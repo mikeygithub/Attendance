@@ -1,9 +1,7 @@
 package com.mikey.attendance.service.course.impl;
 
 import com.mikey.attendance.common.PageBean;
-import com.mikey.attendance.dao.colleges.CollegesDao;
 import com.mikey.attendance.dao.course.CourseDao;
-import com.mikey.attendance.model.SysCollegeEntity;
 import com.mikey.attendance.model.SysCourseEntity;
 import com.mikey.attendance.service.course.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,9 +35,9 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public void update(SysCourseEntity sysCourseEntity) {
+    public void update(SysCourseEntity sysCourseEntity, String courseClasses) {
 
-        courseDao.update(sysCourseEntity);
+        courseDao.update(sysCourseEntity,courseClasses);
 
     }
 

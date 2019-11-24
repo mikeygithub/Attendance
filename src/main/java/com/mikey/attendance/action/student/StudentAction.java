@@ -4,11 +4,14 @@ import com.mikey.attendance.common.PageBean;
 import com.mikey.attendance.model.SysClassesEntity;
 import com.mikey.attendance.model.SysStudentEntity;
 import com.mikey.attendance.service.student.StudentService;
+import com.mikey.attendance.vo.PageViewTransferVo;
 import com.mikey.attendance.vo.R;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.List;
 
 
 /**
@@ -44,6 +47,8 @@ public class StudentAction extends ActionSupport implements ModelDriven<SysStude
     private Integer attendanceType;
     //抽取数量
     private Integer number;
+    //sex
+    private Integer studentSex;
     /////////////////////////////////////////
 
     /**
@@ -51,7 +56,7 @@ public class StudentAction extends ActionSupport implements ModelDriven<SysStude
      */
     public String save() {
 
-        studentService.save(studentEntity,classId);
+        studentService.save(studentEntity,studentSex);
 
         r = R.ok();
 
@@ -147,7 +152,8 @@ public class StudentAction extends ActionSupport implements ModelDriven<SysStude
      */
     public String getStudentByClassId(){
 
-        r = R.ok().put("data",studentService.getStudentByClassId(classId));
+        r = studentService.getStudentByClassId(classId);
+
         return SUCCESS;
     }
     /////////////////////////////////////////
@@ -231,6 +237,14 @@ public class StudentAction extends ActionSupport implements ModelDriven<SysStude
 
     public void setNumber(Integer number) {
         this.number = number;
+    }
+
+    public Integer getStudentSex() {
+        return studentSex;
+    }
+
+    public void setStudentSex(Integer studentSex) {
+        this.studentSex = studentSex;
     }
 
     @Override

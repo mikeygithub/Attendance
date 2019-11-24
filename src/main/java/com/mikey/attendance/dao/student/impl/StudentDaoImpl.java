@@ -4,6 +4,7 @@ import com.mikey.attendance.common.PageBean;
 import com.mikey.attendance.dao.student.StudentDao;
 import com.mikey.attendance.model.BizStuOfClaEntity;
 import com.mikey.attendance.model.SysStudentEntity;
+import com.mikey.attendance.model.SysUserEntity;
 import com.mikey.attendance.util.SysConstant;
 import com.mikey.attendance.vo.PageViewTransferVo;
 import com.mikey.attendance.vo.R;
@@ -19,9 +20,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * @Program: YoungVolunteer
@@ -40,12 +39,19 @@ public class StudentDaoImpl implements StudentDao {
     private HibernateTemplate hibernateTemplate;
 
     @Override
-    public void save(SysStudentEntity studentEntity,Integer classId) {
-        Integer save = (Integer) sessionFactory.getCurrentSession().save(studentEntity);
-        BizStuOfClaEntity bizStuOfClaEntity = new BizStuOfClaEntity();
-        bizStuOfClaEntity.setClaId(classId);
-        bizStuOfClaEntity.setStuId(save);
-        sessionFactory.getCurrentSession().save(bizStuOfClaEntity);
+    public void save(SysStudentEntity studentEntity,Integer sex) {
+
+        //登入用户
+        SysUserEntity sysUserEntity = new SysUserEntity();
+        sysUserEntity.setLoginAccount(studentEntity.getStudentCode());
+        sysUserEntity.setLoginPassword(SysConstant.DEFAULT_PASSWORD);
+        sysUserEntity.setRoleType(SysConstant.USER_TYPE_STUDENT);
+        sysUserEntity.setUserSex(sex);
+        Integer save = (Integer) sessionFactory.getCurrentSession().save(sysUserEntity);
+
+        //保存学生
+        studentEntity.setUserId(save);
+        sessionFactory.getCurrentSession().save(studentEntity);
     }
 
     @Override
@@ -177,31 +183,27 @@ public class StudentDaoImpl implements StudentDao {
      * @return
      */
     @Override
-    public List<PageViewTransferVo> getStudentByClassId(Integer classId) {
+    public R getStudentByClassId(Integer classId) {
+
         ArrayList<PageViewTransferVo> pageViewTransferVos = new ArrayList<>();
-        //班级为空查询全部
-        if (classId==null){
+
+        ArrayList<Integer> select = new ArrayList<>();
+            //查询全部
             Criteria criteria = sessionFactory.getCurrentSession().createCriteria(SysStudentEntity.class);
             criteria.list().forEach(v->{
                 pageViewTransferVos.add(new PageViewTransferVo().setTitle(((SysStudentEntity)v).getStudentName()).setValue(((SysStudentEntity)v).getStudentId()+"").setChecked(false).setDisabled(false));
             });
-        }else {
             //查询全部
             List<SysStudentEntity> allStu = sessionFactory.getCurrentSession().createCriteria(SysStudentEntity.class).list();
             //查询中间表
-            Criteria criteria = sessionFactory.getCurrentSession().createCriteria(BizStuOfClaEntity.class);
+            Criteria criteriaof = sessionFactory.getCurrentSession().createCriteria(BizStuOfClaEntity.class);
             //当前班级对应的学生中间表
-            criteria.add(Restrictions.eq("claId",classId)).list().forEach(v->{
-                SysStudentEntity stu = (SysStudentEntity) sessionFactory.getCurrentSession().get(SysStudentEntity.class, ((SysStudentEntity) v).getStudentId());
-                allStu.remove(stu);
-                pageViewTransferVos.add(new PageViewTransferVo().setTitle(stu.getStudentName()).setValue(String.valueOf(stu.getStudentId())).setChecked(true).setDisabled(false));
+            //已经选择的学生
+            criteriaof.add(Restrictions.eq("claId",classId)).list().forEach(v->{
+                select.add(((BizStuOfClaEntity)v).getStuId());
             });
-            allStu.forEach(v->{
-                pageViewTransferVos.add(new PageViewTransferVo().setTitle(v.getStudentName()).setValue(String.valueOf(v.getStudentId())).setChecked(false).setDisabled(false));
-            });
-        }
 
-        return pageViewTransferVos;
+        return R.ok().put("data",pageViewTransferVos).put("select",select);
     }
 
 }

@@ -73,7 +73,7 @@ public class ClassesAction extends ActionSupport implements ModelDriven<SysClass
      */
     public String update() {
 
-        classesService.update(classesEntity);
+        classesService.update(classesEntity,students);
 
         r = R.ok();
 

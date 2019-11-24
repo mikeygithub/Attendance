@@ -9,5 +9,6 @@
         <property name="studentName" column="student_name"/>
         <property name="studentCode" column="student_code"/>
         <property name="studentPhone" column="student_phone"/>
+        <property name="userId" column="user_id"/>
     </class>
 </hibernate-mapping>

@@ -1,10 +1,10 @@
-package com.mikey.attendance.action.course;
+package com.mikey.attendance.action.teacher;
 
 import com.mikey.attendance.common.PageBean;
-import com.mikey.attendance.model.SysCollegeEntity;
-import com.mikey.attendance.model.SysCourseEntity;
-import com.mikey.attendance.service.colleges.CollegesService;
-import com.mikey.attendance.service.course.CourseService;
+import com.mikey.attendance.model.SysStudentEntity;
+import com.mikey.attendance.model.SysTeacherEntity;
+import com.mikey.attendance.service.student.StudentService;
+import com.mikey.attendance.service.teacher.TeacherService;
 import com.mikey.attendance.vo.R;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
@@ -19,16 +19,16 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @Create: 2019-06-05 09:24
  * @Describe：
  **/
-public class CourseAction extends ActionSupport implements ModelDriven<SysCourseEntity> {
+public class TeacherAction extends ActionSupport implements ModelDriven<SysTeacherEntity> {
 
     @Autowired
-    private CourseService courseService;
+    private TeacherService teacherService;
     //日志
-    private static Logger logger = Logger.getLogger(SysCourseEntity.class);
+    private static Logger logger = Logger.getLogger(SysTeacherEntity.class);
     //模型驱动
-    private SysCourseEntity sysCourseEntity = new SysCourseEntity();
+    private SysTeacherEntity sysTeacherEntity = new SysTeacherEntity();
     //
-    private PageBean<SysCollegeEntity> pageBean = new PageBean<>();
+    private PageBean<SysTeacherEntity> pageBean = new PageBean<>();
     //返回集
     private R r = new R();
     //搜索值
@@ -39,16 +39,17 @@ public class CourseAction extends ActionSupport implements ModelDriven<SysCourse
     private Integer limit;
     //批量删除id
     private String ids;
-    //授课班级
-    private String courseClasses;
-    /////////////////////////////////////////
+    //班级id
+    private Integer classId;
+    //sex
+    private Integer teacherSex;
 
     /**
      * 添加
      */
     public String save() {
 
-        courseService.save(sysCourseEntity,courseClasses);
+        teacherService.save(sysTeacherEntity,teacherSex);
 
         r = R.ok();
 
@@ -60,7 +61,7 @@ public class CourseAction extends ActionSupport implements ModelDriven<SysCourse
      */
     public String delete() {
 
-        courseService.delete(sysCourseEntity);
+        teacherService.delete(sysTeacherEntity);
 
         r = R.ok();
 
@@ -72,7 +73,7 @@ public class CourseAction extends ActionSupport implements ModelDriven<SysCourse
      */
     public String update() {
 
-        courseService.update(sysCourseEntity,courseClasses);
+        teacherService.update(sysTeacherEntity);
 
         r = R.ok();
 
@@ -86,7 +87,7 @@ public class CourseAction extends ActionSupport implements ModelDriven<SysCourse
      */
     public String findById() {
 
-        SysCourseEntity byId = courseService.findById(sysCourseEntity);
+        SysTeacherEntity byId = teacherService.findById(sysTeacherEntity);
 
         r = R.ok().put("data", byId);
 
@@ -98,7 +99,8 @@ public class CourseAction extends ActionSupport implements ModelDriven<SysCourse
      */
     public String findByPage() {
 
-        PageBean byPage = courseService.findByPage(key,sysCourseEntity.getTeacherId(), new PageBean<SysCourseEntity>().setCurrPage(page).setPageSize(limit));
+        PageBean byPage = teacherService.findByPage(key, new PageBean<SysTeacherEntity>().setCurrPage(page).setPageSize(limit));
+
 
         r = R.ok().put("data", byPage.getRows()).put("count", byPage.getTotal());
 
@@ -116,33 +118,15 @@ public class CourseAction extends ActionSupport implements ModelDriven<SysCourse
         String[] id = ids.split(",");
 
 
-        courseService.deleteBatch(id);
+        teacherService.deleteBatch(id);
 
         r = R.ok();
 
         return SUCCESS;
     }
 
-    @Override
-    public SysCourseEntity getModel() {
-        return sysCourseEntity;
-    }
+    /////////////////////////////////////////
 
-    public SysCourseEntity getSysCourseEntity() {
-        return sysCourseEntity;
-    }
-
-    public void setSysCourseEntity(SysCourseEntity sysCourseEntity) {
-        this.sysCourseEntity = sysCourseEntity;
-    }
-
-    public PageBean<SysCollegeEntity> getPageBean() {
-        return pageBean;
-    }
-
-    public void setPageBean(PageBean<SysCollegeEntity> pageBean) {
-        this.pageBean = pageBean;
-    }
 
     public R getR() {
         return r;
@@ -184,14 +168,40 @@ public class CourseAction extends ActionSupport implements ModelDriven<SysCourse
         this.ids = ids;
     }
 
-    public String getCourseClasses() {
-        return courseClasses;
+    public Integer getClassId() {
+        return classId;
     }
 
-    public void setCourseClasses(String courseClasses) {
-        this.courseClasses = courseClasses;
+    public void setClassId(Integer classId) {
+        this.classId = classId;
     }
 
-    /////////////////////////////////////////
+    public SysTeacherEntity getSysTeacherEntity() {
+        return sysTeacherEntity;
+    }
 
+    public void setSysTeacherEntity(SysTeacherEntity sysTeacherEntity) {
+        this.sysTeacherEntity = sysTeacherEntity;
+    }
+
+    public PageBean<SysTeacherEntity> getPageBean() {
+        return pageBean;
+    }
+
+    public void setPageBean(PageBean<SysTeacherEntity> pageBean) {
+        this.pageBean = pageBean;
+    }
+
+    public Integer getTeacherSex() {
+        return teacherSex;
+    }
+
+    public void setTeacherSex(Integer teacherSex) {
+        this.teacherSex = teacherSex;
+    }
+
+    @Override
+    public SysTeacherEntity getModel() {
+        return sysTeacherEntity;
+    }
 }

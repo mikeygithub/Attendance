@@ -1,7 +1,6 @@
 package com.mikey.attendance.service.course;
 
 import com.mikey.attendance.common.PageBean;
-import com.mikey.attendance.model.SysCollegeEntity;
 import com.mikey.attendance.model.SysCourseEntity;
 
 /**
@@ -25,7 +24,7 @@ public interface CourseService {
     /**
      * 修改
      */
-    public void update(SysCourseEntity sysCourseEntity);
+    public void update(SysCourseEntity sysCourseEntity, String courseClasses);
 
     /**
      * 查询

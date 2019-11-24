@@ -17,7 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate4.HibernateTemplate;
 import org.springframework.stereotype.Component;
 
-import java.io.Serializable;
 import java.util.*;
 
 /**
@@ -59,9 +58,25 @@ public class ClassesDaoImpl implements ClassesDao {
         });
     }
 
+    /**
+     * 更新
+     * @param classesEntity
+     * @param stuIds
+     */
     @Override
-    public void update(SysClassesEntity classesEntity) {
+    public void update(SysClassesEntity classesEntity, String stuIds) {
         sessionFactory.getCurrentSession().update(classesEntity);
+        Criteria criteria = sessionFactory.getCurrentSession().createCriteria(BizStuOfClaEntity.class);
+        criteria.add(Restrictions.eq("claId",classesEntity.getClassesId())).list().forEach(v->{
+            sessionFactory.getCurrentSession().delete(v);
+        });
+        String[] split = stuIds.split(",");
+        Arrays.stream(split).forEach(v->{
+            BizStuOfClaEntity boc = new BizStuOfClaEntity();
+            boc.setStuId(Integer.parseInt(v));
+            boc.setClaId(classesEntity.getClassesId());
+            sessionFactory.getCurrentSession().save(boc);
+        });
     }
 
     @Override
@@ -130,43 +145,27 @@ public class ClassesDaoImpl implements ClassesDao {
     public R getClasses(Integer courseId) {
 
         Session session = sessionFactory.openSession();
+
         Criteria criteria = session.createCriteria(SysClassesEntity.class);
 
-        List<PageViewTransferVo> list = new ArrayList<>();
-        //result
-        List<SysClassesEntity> allClass = new ArrayList<>();
+        List<PageViewTransferVo> allClass = new ArrayList<>();
         //已经选择的class
-        List<SysClassesEntity> selectClass = new ArrayList<>();
+        List<Integer> selectClass = new ArrayList<>();
         //all
-        Set<PageViewTransferVo> resultClass = new HashSet<>();
+        criteria.list().forEach(v->{
+            allClass.add(new PageViewTransferVo().setValue(String.valueOf(((SysClassesEntity)v).getClassesId())).setTitle(((SysClassesEntity)v).getClassesName()).setChecked(false).setDisabled(false));
+        });
 
+        session.createCriteria(BizCouOfClaEntity.class)
+                .add(Restrictions.eq("courseId", courseId)).list()
+                .forEach(v->{
+                selectClass.add(((BizCouOfClaEntity)v).getClassesId());
+                });
 
-        if (courseId==null||courseId.toString()=="") {
-            allClass=criteria.list();
-        }else {
-            allClass=criteria.list();
-            Criteria crt = session.createCriteria(BizCouOfClaEntity.class);
-            List<BizCouOfClaEntity> cou_of_cla = crt.add(Restrictions.eq("courseId", courseId)).list();
-
-            for(BizCouOfClaEntity bizCouOfClaEntity:cou_of_cla){
-                //查询班级
-                SysClassesEntity sysClassesEntity = hibernateTemplate.get(SysClassesEntity.class, bizCouOfClaEntity.getClassesId());
-                selectClass.add(sysClassesEntity);
-                //将总的移除
-                allClass.remove(sysClassesEntity);
-            }
-
-        }
-        for(SysClassesEntity s:selectClass){
-            resultClass.add(new PageViewTransferVo().setValue(s.getClassesId()+"").setTitle(s.getClassesName()).setChecked(false).setDisabled(false));
-        }
-        for(SysClassesEntity s:allClass){
-            resultClass.add(new PageViewTransferVo().setValue(s.getClassesId()+"").setTitle(s.getClassesName()).setChecked(true).setDisabled(false));
-        }
 
         session.close();
 
-        return R.ok().put("classes",resultClass);
+        return R.ok().put("classes",allClass).put("select",selectClass);
     }
 
     /**

@@ -20,6 +20,7 @@ public class SysTeacherEntity {
     private String teacherCode;
     private String teacherPhone;
     private String teacherEmail;
+    private Integer userId;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -70,6 +71,16 @@ public class SysTeacherEntity {
 
     public void setTeacherEmail(String teacherEmail) {
         this.teacherEmail = teacherEmail;
+    }
+
+    @Basic
+    @Column(name = "user_id")
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     @Override

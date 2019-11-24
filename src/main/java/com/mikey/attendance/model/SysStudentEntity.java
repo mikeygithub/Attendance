@@ -19,7 +19,7 @@ public class SysStudentEntity {
     private String studentName;
     private String studentCode;
     private String studentPhone;
-
+    private Integer userId;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "student_id")
@@ -59,6 +59,16 @@ public class SysStudentEntity {
 
     public void setStudentPhone(String studentPhone) {
         this.studentPhone = studentPhone;
+    }
+
+    @Basic
+    @Column(name = "user_id")
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     @Override

@@ -57,6 +57,8 @@ layui.use(['form','layer','table','laytpl'],function(){
                     body.find(".classesCode").val(edit.classesCode);  //登录名
                     body.find(".classesName").val(edit.classesName);  //邮箱
                     body.find(".updateFlag").val(1);//更新标识
+                    //渲染穿梭框
+
                     form.render();
                 }
             }

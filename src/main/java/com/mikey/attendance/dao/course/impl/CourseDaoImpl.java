@@ -6,7 +6,6 @@ import com.mikey.attendance.model.BizCouOfClaEntity;
 import com.mikey.attendance.model.SysClassesEntity;
 import com.mikey.attendance.model.SysCollegeEntity;
 import com.mikey.attendance.model.SysCourseEntity;
-import com.mikey.attendance.vo.R;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -17,8 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate4.HibernateTemplate;
 import org.springframework.stereotype.Component;
 
-import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -60,8 +59,20 @@ public class CourseDaoImpl implements CourseDao {
     }
 
     @Override
-    public void update(SysCourseEntity sysCourseEntity) {
+    public void update(SysCourseEntity sysCourseEntity, String courseClasses) {
         sessionFactory.getCurrentSession().update(sysCourseEntity);
+        //删除中间表
+        Criteria criteria = sessionFactory.getCurrentSession().createCriteria(BizCouOfClaEntity.class);
+        criteria.add(Restrictions.eq("courseId",sysCourseEntity.getCourseId())).list().forEach(v->{
+            sessionFactory.getCurrentSession().delete(v);
+        });
+        //重新保存
+        Arrays.stream(courseClasses.split(",")).forEach(v->{
+            BizCouOfClaEntity bizCouOfClaEntity = new BizCouOfClaEntity();
+            bizCouOfClaEntity.setCourseId(sysCourseEntity.getCourseId());
+            bizCouOfClaEntity.setClassesId(Integer.parseInt(v));
+            sessionFactory.getCurrentSession().save(bizCouOfClaEntity);
+        });
     }
 
     @Override

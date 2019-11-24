@@ -32,8 +32,8 @@ public class ClassesServiceImpl implements ClassesService {
     }
 
     @Override
-    public void update(SysClassesEntity classesEntity) {
-        classesDao.update(classesEntity);
+    public void update(SysClassesEntity classesEntity,String stuIds) {
+        classesDao.update(classesEntity,stuIds);
     }
 
     @Override

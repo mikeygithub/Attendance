@@ -2,9 +2,7 @@ package com.mikey.attendance.service.student;
 
 import com.mikey.attendance.common.PageBean;
 import com.mikey.attendance.model.SysStudentEntity;
-import com.mikey.attendance.vo.PageViewTransferVo;
-
-import java.util.List;
+import com.mikey.attendance.vo.R;
 
 /**
  * @Program: YoungVolunteer
@@ -54,5 +52,5 @@ public interface StudentService {
 
     PageBean findByClassIdWithPage(Integer classId, Integer attendanceType, Integer number);
 
-    List<PageViewTransferVo> getStudentByClassId(Integer classId);
+    R getStudentByClassId(Integer classId);
 }
