@@ -30,7 +30,7 @@ CREATE TABLE `biz_attendance` (
   `attendance_cas_id` int(11) DEFAULT NULL COMMENT '课程外键',
   `attendance_cls_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`attendance_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -39,7 +39,7 @@ CREATE TABLE `biz_attendance` (
 
 LOCK TABLES `biz_attendance` WRITE;
 /*!40000 ALTER TABLE `biz_attendance` DISABLE KEYS */;
-INSERT INTO `biz_attendance` VALUES (6,0,'2019-11-23 18:06:33',11,8,8),(7,1,'2019-11-23 18:06:33',12,8,8),(8,2,'2019-11-23 18:06:33',13,8,8),(9,3,'2019-11-23 18:06:33',14,8,8),(10,4,'2019-11-23 18:06:33',15,8,8),(11,3,'2019-11-23 18:07:43',11,8,8),(12,2,'2019-11-23 18:07:43',13,8,8),(13,3,'2019-11-23 20:27:51',11,8,8),(14,3,'2019-11-23 20:27:51',12,8,8),(15,3,'2019-11-23 20:27:51',13,8,8),(16,3,'2019-11-23 20:27:51',14,8,8),(17,3,'2019-11-23 20:27:51',15,8,8),(18,4,'2019-11-24 17:16:18',11,8,8),(19,4,'2019-11-24 17:16:18',12,8,8),(20,4,'2019-11-24 17:16:18',13,8,8),(21,4,'2019-11-24 17:16:18',14,8,8),(22,4,'2019-11-24 17:16:18',15,8,8);
+INSERT INTO `biz_attendance` VALUES (6,0,'2019-11-23 18:06:33',11,8,8),(7,1,'2019-11-23 18:06:33',12,8,8),(8,2,'2019-11-23 18:06:33',13,8,8),(9,3,'2019-11-23 18:06:33',14,8,8),(10,4,'2019-11-23 18:06:33',15,8,8),(11,3,'2019-11-23 18:07:43',11,8,8),(12,2,'2019-11-23 18:07:43',13,8,8),(13,3,'2019-11-23 20:27:51',11,8,8),(14,3,'2019-11-23 20:27:51',12,8,8),(15,3,'2019-11-23 20:27:51',13,8,8),(16,3,'2019-11-23 20:27:51',14,8,8),(17,3,'2019-11-23 20:27:51',15,8,8),(18,4,'2019-11-24 17:16:18',11,8,8),(19,4,'2019-11-24 17:16:18',12,8,8),(20,4,'2019-11-24 17:16:18',13,8,8),(21,4,'2019-11-24 17:16:18',14,8,8),(22,4,'2019-11-24 17:16:18',15,8,8),(23,0,'2019-11-24 17:43:55',11,10,8),(24,1,'2019-11-24 17:43:55',12,10,8),(25,2,'2019-11-24 17:43:55',13,10,8),(26,3,'2019-11-24 17:43:55',14,10,8),(27,4,'2019-11-24 17:43:55',15,10,8),(28,4,'2019-11-24 17:44:10',11,10,8),(29,4,'2019-11-24 17:44:10',15,10,8),(30,4,'2019-11-24 17:44:10',12,10,8);
 /*!40000 ALTER TABLE `biz_attendance` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -55,7 +55,7 @@ CREATE TABLE `biz_cou_of_cla` (
   `course_id` int(11) DEFAULT NULL COMMENT '课程id',
   `classes_id` int(11) DEFAULT NULL COMMENT '班级id',
   PRIMARY KEY (`boco_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8 COMMENT='中间表';
+) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8 COMMENT='中间表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -64,7 +64,7 @@ CREATE TABLE `biz_cou_of_cla` (
 
 LOCK TABLES `biz_cou_of_cla` WRITE;
 /*!40000 ALTER TABLE `biz_cou_of_cla` DISABLE KEYS */;
-INSERT INTO `biz_cou_of_cla` VALUES (10,6,4),(11,6,2),(12,6,1),(13,7,1),(14,7,2),(15,8,8),(16,8,1),(17,8,2),(18,8,7),(19,8,9),(20,8,6),(21,5,1),(22,5,2),(23,5,16),(24,5,17),(25,9,1),(26,9,2),(27,9,6),(28,9,7),(29,9,8),(30,9,9),(31,9,16),(32,9,17);
+INSERT INTO `biz_cou_of_cla` VALUES (10,6,4),(11,6,2),(12,6,1),(13,7,1),(14,7,2),(15,8,8),(16,8,1),(17,8,2),(18,8,7),(19,8,9),(20,8,6),(21,5,1),(22,5,2),(23,5,16),(24,5,17),(25,9,1),(26,9,2),(27,9,6),(28,9,7),(29,9,8),(30,9,9),(31,9,16),(32,9,17),(33,10,1),(34,10,2),(35,10,6),(36,10,7),(37,10,8),(38,10,9);
 /*!40000 ALTER TABLE `biz_cou_of_cla` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -186,7 +186,7 @@ CREATE TABLE `sys_course` (
   `course_code` varchar(50) DEFAULT NULL COMMENT '编号',
   `teacher_id` int(11) DEFAULT NULL COMMENT '开课教师',
   PRIMARY KEY (`course_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -195,7 +195,7 @@ CREATE TABLE `sys_course` (
 
 LOCK TABLES `sys_course` WRITE;
 /*!40000 ALTER TABLE `sys_course` DISABLE KEYS */;
-INSERT INTO `sys_course` VALUES (5,'AAA1','AAA1',1),(6,'QQQ','QQQ',1),(7,'JavaWeb','JavaWeb',1),(8,'Kubernetes','C008',1),(9,'以太坊之智能合约','BLOCKCHAIN001',1);
+INSERT INTO `sys_course` VALUES (5,'AAA1','AAA1',1),(6,'QQQ','QQQ',1),(7,'JavaWeb','JavaWeb',1),(8,'Kubernetes','C008',1),(9,'以太坊之智能合约','BLOCKCHAIN001',1),(10,'软件工程导论','SOFT001',3);
 /*!40000 ALTER TABLE `sys_course` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -223,7 +223,7 @@ CREATE TABLE `sys_menu` (
 
 LOCK TABLES `sys_menu` WRITE;
 /*!40000 ALTER TABLE `sys_menu` DISABLE KEYS */;
-INSERT INTO `sys_menu` VALUES (1,'学生管理','&#xe630;',' ',0,'1'),(2,'班级管理','&#xe630;',' ',0,'1'),(3,'学院管理','&#xe630;',' ',0,'1'),(4,'课程管理','&#xe630;',' ',0,'1'),(5,'考勤管理','&#xe630;',' ',0,'1'),(6,'教师管理','&#xe630;',' ',0,'1');
+INSERT INTO `sys_menu` VALUES (1,'学生管理','&#xe630;',' ',0,'1'),(2,'班级管理','&#xe630;',' ',0,'1'),(3,'学院管理','&#xe630;',' ',0,'1'),(4,'课程管理','&#xe630;',' ',0,'1'),(5,'考勤管理','&#xe630;',' ',0,'1'),(6,'教师管理','&#xe630;',' ',0,'1'),(7,'课程管理','&#xe630;',' ',0,'2'),(8,'考勤管理','&#xe630;',' ',0,'2'),(9,'考勤管理','&#xe630;',' ',0,'3');
 /*!40000 ALTER TABLE `sys_menu` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -253,7 +253,7 @@ CREATE TABLE `sys_menu_children` (
 
 LOCK TABLES `sys_menu_children` WRITE;
 /*!40000 ALTER TABLE `sys_menu_children` DISABLE KEYS */;
-INSERT INTO `sys_menu_children` VALUES (1,'学生列表','&#xe61c;','/Attendance_war/page/system/student/studentList.html',0,1),(2,'班级列表','&#xe61c;','/Attendance_war/page/system/class/classList.html',0,2),(3,'学院列表','&#xe61c;','/Attendance_war/page/system/colleges/collegesList.html',0,3),(4,'课程列表','&#xe61c;','/Attendance_war/page/system/course/courseList.html',0,4),(5,'考勤列表','&#xe61c;','/Attendance_war/page/system/attendance/attendanceList.html',0,5),(6,'课堂考勤','&#xe61c;','/Attendance_war/page/system/attendance/attendance.html',0,5),(7,'教师列表','&#xe61c;','/Attendance_war/page/system/teacher/teacherList.html',0,6);
+INSERT INTO `sys_menu_children` VALUES (1,'学生列表','&#xe61c;','/Attendance_war/page/system/student/studentList.html',0,1),(2,'班级列表','&#xe61c;','/Attendance_war/page/system/class/classList.html',0,2),(3,'学院列表','&#xe61c;','/Attendance_war/page/system/colleges/collegesList.html',0,3),(4,'课程列表','&#xe61c;','/Attendance_war/page/system/course/courseList.html',0,4),(5,'考勤列表','&#xe61c;','/Attendance_war/page/system/attendance/attendanceList.html',0,5),(6,'课堂考勤','&#xe61c;','/Attendance_war/page/system/attendance/attendance.html',0,5),(7,'教师列表','&#xe61c;','/Attendance_war/page/system/teacher/teacherList.html',0,6),(8,'课程列表','&#xe61c;','/Attendance_war/page/system/course/courseList.html',0,7),(9,'课堂考勤','&#xe61c;','/Attendance_war/page/system/attendance/attendance.html',0,8),(10,'考勤列表','&#xe61c;','/Attendance_war/page/system/attendance/attendanceList.html',0,8),(11,'考勤列表','&#xe61c;','/Attendance_war/page/system/attendance/attendanceList.html',0,9);
 /*!40000 ALTER TABLE `sys_menu_children` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -348,4 +348,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-11-24 17:32:56
+-- Dump completed on 2019-11-24 17:47:25
