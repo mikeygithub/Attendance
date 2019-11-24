@@ -1,9 +1,7 @@
 package com.mikey.attendance.action.teacher;
 
 import com.mikey.attendance.common.PageBean;
-import com.mikey.attendance.model.SysStudentEntity;
 import com.mikey.attendance.model.SysTeacherEntity;
-import com.mikey.attendance.service.student.StudentService;
 import com.mikey.attendance.service.teacher.TeacherService;
 import com.mikey.attendance.vo.R;
 import com.opensymphony.xwork2.ActionSupport;
@@ -73,7 +71,7 @@ public class TeacherAction extends ActionSupport implements ModelDriven<SysTeach
      */
     public String update() {
 
-        teacherService.update(sysTeacherEntity);
+        teacherService.update(sysTeacherEntity, teacherSex);
 
         r = R.ok();
 

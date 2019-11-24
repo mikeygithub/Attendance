@@ -1,9 +1,7 @@
 package com.mikey.attendance.service.teacher.impl;
 
 import com.mikey.attendance.common.PageBean;
-import com.mikey.attendance.dao.colleges.CollegesDao;
 import com.mikey.attendance.dao.teacher.TeacherDao;
-import com.mikey.attendance.model.SysCollegeEntity;
 import com.mikey.attendance.model.SysTeacherEntity;
 import com.mikey.attendance.service.teacher.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,9 +35,9 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public void update(SysTeacherEntity sysTeacherEntity) {
+    public void update(SysTeacherEntity sysTeacherEntity, Integer sex) {
 
-        teacherDao.update(sysTeacherEntity);
+        teacherDao.update(sysTeacherEntity, sex);
 
     }
 

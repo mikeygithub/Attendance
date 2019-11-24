@@ -21,6 +21,7 @@ public class BizAttendanceEntity {
     private Timestamp attendanceTime;
     private Integer attendanceStuId;
     private Integer attendanceCasId;
+    private Integer attendanceClaId;
     @Transient
     private SysStudentEntity sysStudentEntity;
 
@@ -86,7 +87,15 @@ public class BizAttendanceEntity {
                 Objects.equals(attendanceStuId, that.attendanceStuId) &&
                 Objects.equals(attendanceCasId, that.attendanceCasId);
     }
+    @Basic
+    @Column(name = "attendance_cls_id")
+    public Integer getAttendanceClaId() {
+        return attendanceClaId;
+    }
 
+    public void setAttendanceClaId(Integer attendanceClaId) {
+        this.attendanceClaId = attendanceClaId;
+    }
     @Transient
     public SysStudentEntity getSysStudentEntity() {
         return sysStudentEntity;

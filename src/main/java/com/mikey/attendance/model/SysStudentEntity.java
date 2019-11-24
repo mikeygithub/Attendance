@@ -20,6 +20,10 @@ public class SysStudentEntity {
     private String studentCode;
     private String studentPhone;
     private Integer userId;
+
+    @Transient
+    private SysUserEntity sysUserEntity;
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "student_id")
@@ -69,6 +73,15 @@ public class SysStudentEntity {
 
     public void setUserId(Integer userId) {
         this.userId = userId;
+    }
+
+    @Transient
+    public SysUserEntity getSysUserEntity() {
+        return sysUserEntity;
+    }
+
+    public void setSysUserEntity(SysUserEntity sysUserEntity) {
+        this.sysUserEntity = sysUserEntity;
     }
 
     @Override

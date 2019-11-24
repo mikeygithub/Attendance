@@ -41,24 +41,65 @@ layui.use(['form','layer','table','laytpl'],function(){
         },
         page: true
     });
+    //获取当前教师的课程
+    $.post('../../../biz/course_findByPage.action',{
+        teacherId : window.sessionStorage.getItem('userId'),
+        page : 1,
+        limit : 100000
+    },function(data){
+        if (data.code === 0){
+            //渲染课程下拉框
+            for (var i = 0; i < data.data.length; i++) {
+                $(".courseId").append(new Option(data.data[i].courseName,data.data[i].courseId));
+            }
+            form.render('select');
+        }else {
+            layer.msg("获取课程数据失败");
+        };
+        form.render();
+    })
+
+    //课程的下拉框监听事件
+    form.on('select(coursefilter)',function (data) {
+        $.post("../../../biz/classes_getClassesByCourseIdSimple.action",{
+            courseId : data.value  //将需要删除的newsId作为参数传入
+        },function(res){
+            if (res.code === 0){
+                //渲染班级下拉框
+                $(".classesId").empty();
+                for (var i = 0; i < res.classes.length; i++) {
+                    if (res.classes[i]!=null&&res.classes[i]!=""){
+                        $(".classesId").append(new Option(res.classes[i].classesName,res.classes[i].classesId));
+                    }
+                }
+                form.render('select');
+            }else {
+                layer.msg("获取班级数据失败");
+            };
+            form.render();
+            table.render();
+        })
+    })
 
     //搜索【此功能需要后台配合，所以暂时没有动态效果演示】
     $(".search_btn").on("click",function(){
-        if($(".searchVal").val() != ''){
+        if($(".searchVal").val() == ''&&$(".courseId").val()==''&& $(".classesId").val()=='') {
+            layer.msg("请输入搜索的内容");
+        }else {
             var index = layer.msg('查询中,请稍候...',{icon: 16,time:false,shade:0})
             setTimeout(function(){
                 table.reload("userListTable",{
-                page: {
-                    curr: 1 //重新从第 1 页开始
-                },
-                where: {
-                    key: $(".searchVal").val()  //搜索的关键字
-                }
-            });
-            layer.close(index);
-        },800)
-        } else{
-            layer.msg("请输入搜索的内容");
+                    page: {
+                        curr: 1 //重新从第 1 页开始
+                    },
+                    where: {
+                        key: $(".searchVal").val(),  //搜索的关键字
+                        courseId: $(".courseId").val(),
+                        classId: $(".classesId").val()
+                    }
+                });
+                layer.close(index);
+            },800)
         }
     });
 

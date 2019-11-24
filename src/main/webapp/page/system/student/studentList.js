@@ -51,15 +51,16 @@ layui.use(['form','layer','table','laytpl'],function(){
         var index = layui.layer.open({
             title : "添加",
             type : 2,
-            content : "teacherAdd.html",
+            content : "studentAdd.html",
             success : function(layero, index){
                 var body = layui.layer.getChildFrame('body', index)
                     if(edit){
                         body.find(".Id").val(edit.studentId);
+                        body.find(".userId").val(edit.userId);
                         body.find(".studentName").val(edit.studentName);  //登录名
                         body.find(".studentPhone").val(edit.studentPhone);  //登录名
                         body.find(".studentCode").val(edit.studentCode);  //邮箱
-                        body.find(".studentSex input[value="+edit.studentSex+"]").prop("checked","checked");  //性别
+                        body.find(".studentSex input[value="+edit.sysUserEntity.userSex+"]").prop("checked","checked");  //性别
                         body.find(".updateFlag").val(1);//更新标识
                     }
                     form.render();

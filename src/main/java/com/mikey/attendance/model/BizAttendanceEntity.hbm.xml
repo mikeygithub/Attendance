@@ -10,5 +10,6 @@
         <property name="attendanceTime" column="attendance_time"/>
         <property name="attendanceStuId" column="attendance_stu_id"/>
         <property name="attendanceCasId" column="attendance_cas_id"/>
+        <property name="attendanceClaId" column="attendance_cla_id"/>
     </class>
 </hibernate-mapping>

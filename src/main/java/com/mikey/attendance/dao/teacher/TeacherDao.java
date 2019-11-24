@@ -1,7 +1,6 @@
 package com.mikey.attendance.dao.teacher;
 
 import com.mikey.attendance.common.PageBean;
-import com.mikey.attendance.model.SysCollegeEntity;
 import com.mikey.attendance.model.SysTeacherEntity;
 
 /**
@@ -25,7 +24,7 @@ public interface TeacherDao {
     /**
      * 修改
      */
-    public void update(SysTeacherEntity sysTeacherEntity);
+    public void update(SysTeacherEntity sysTeacherEntity, Integer sex);
 
     /**
      * 查询

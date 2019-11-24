@@ -74,8 +74,8 @@ public class CollegesDaoImpl implements CollegesDao {
             //搜索
             List list = criteria.add(
                     Restrictions.or(
-                            Restrictions.or(Restrictions.like("collegesCode", key, MatchMode.ANYWHERE)),
-                            Restrictions.or(Restrictions.like("collegesName", key, MatchMode.ANYWHERE))))
+                            Restrictions.or(Restrictions.like("collegeCode", key, MatchMode.ANYWHERE)),
+                            Restrictions.or(Restrictions.like("collegeName", key, MatchMode.ANYWHERE))))
                     .setFirstResult((pageBean.getCurrPage() - 1) * pageBean.getPageSize() )
                     .setMaxResults((pageBean.getCurrPage() - 1) * pageBean.getPageSize() + pageBean.getPageSize()).list();
             pageBean.setRows(list);

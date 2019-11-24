@@ -48,9 +48,13 @@ public class AttendanceAction extends ActionSupport implements ModelDriven<BizAt
     /**
      * 批量接收要保存的数据
      */
-//    private ArrayList<BizAttendanceEntity> bizAttendanceEntities = new ArrayList<>();
     private String bizAttendanceEntities;
 
+    //课程
+    private Integer courseId;
+
+    //班级
+    private Integer classId;
 
     /////////////////////////////////////////
 
@@ -127,7 +131,7 @@ public class AttendanceAction extends ActionSupport implements ModelDriven<BizAt
      */
     public String findByPage() {
 
-        PageBean byPage = attendanceService.findByPage(key, new PageBean<BizAttendanceEntity>().setCurrPage(page).setPageSize(limit));
+        PageBean byPage = attendanceService.findByPage(key,classId,courseId, new PageBean<BizAttendanceEntity>().setCurrPage(page).setPageSize(limit));
 
         r = R.ok().put("data", byPage.getRows()).put("count", byPage.getTotal());
 
@@ -214,5 +218,21 @@ public class AttendanceAction extends ActionSupport implements ModelDriven<BizAt
 
     public void setBizAttendanceEntities(String bizAttendanceEntities) {
         this.bizAttendanceEntities = bizAttendanceEntities;
+    }
+
+    public Integer getCourseId() {
+        return courseId;
+    }
+
+    public void setCourseId(Integer courseId) {
+        this.courseId = courseId;
+    }
+
+    public Integer getClassId() {
+        return classId;
+    }
+
+    public void setClassId(Integer classId) {
+        this.classId = classId;
     }
 }

@@ -1,7 +1,6 @@
 package com.mikey.attendance.service.teacher;
 
 import com.mikey.attendance.common.PageBean;
-import com.mikey.attendance.model.SysCollegeEntity;
 import com.mikey.attendance.model.SysTeacherEntity;
 
 /**
@@ -26,7 +25,7 @@ public interface TeacherService {
     /**
      * 修改
      */
-    public void update(SysTeacherEntity sysTeacherEntity);
+    public void update(SysTeacherEntity sysTeacherEntity, Integer sex);
 
     /**
      * 查询

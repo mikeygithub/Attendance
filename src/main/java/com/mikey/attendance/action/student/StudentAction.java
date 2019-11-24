@@ -1,17 +1,13 @@
 package com.mikey.attendance.action.student;
 
 import com.mikey.attendance.common.PageBean;
-import com.mikey.attendance.model.SysClassesEntity;
 import com.mikey.attendance.model.SysStudentEntity;
 import com.mikey.attendance.service.student.StudentService;
-import com.mikey.attendance.vo.PageViewTransferVo;
 import com.mikey.attendance.vo.R;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.List;
 
 
 /**
@@ -80,7 +76,7 @@ public class StudentAction extends ActionSupport implements ModelDriven<SysStude
      */
     public String update() {
 
-        studentService.update(studentEntity);
+        studentService.update(studentEntity, studentSex);
 
         r = R.ok();
 

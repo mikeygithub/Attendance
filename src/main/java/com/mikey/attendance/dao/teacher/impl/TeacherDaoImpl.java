@@ -2,11 +2,9 @@ package com.mikey.attendance.dao.teacher.impl;
 
 import com.mikey.attendance.common.PageBean;
 import com.mikey.attendance.dao.teacher.TeacherDao;
-import com.mikey.attendance.model.SysCollegeEntity;
 import com.mikey.attendance.model.SysTeacherEntity;
 import com.mikey.attendance.model.SysUserEntity;
 import com.mikey.attendance.util.SysConstant;
-import com.mikey.attendance.vo.R;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -37,7 +35,7 @@ public class TeacherDaoImpl implements TeacherDao {
     private HibernateTemplate hibernateTemplate;
 
     @Override
-    public void save(SysTeacherEntity sysTeacherEntity,Integer sex) {
+    public void save(SysTeacherEntity sysTeacherEntity, Integer sex) {
         sessionFactory.getCurrentSession().save(sysTeacherEntity);
         //登入用户
         SysUserEntity sysUserEntity = new SysUserEntity();
@@ -61,8 +59,12 @@ public class TeacherDaoImpl implements TeacherDao {
     }
 
     @Override
-    public void update(SysTeacherEntity sysTeacherEntity) {
+    public void update(SysTeacherEntity sysTeacherEntity, Integer sex) {
         sessionFactory.getCurrentSession().update(sysTeacherEntity);
+        SysUserEntity sysUserEntity = (SysUserEntity) sessionFactory.getCurrentSession().get(SysUserEntity.class, sysTeacherEntity.getUserId());
+        if (!sysUserEntity.getUserSex().equals(sex)){
+            sysUserEntity.setUserSex(sex);
+        }
     }
 
     @Override
@@ -78,32 +80,43 @@ public class TeacherDaoImpl implements TeacherDao {
 
         session.close();
 
-        return list!=null&&list.size()>0? (SysTeacherEntity) list.get(0) :null;
+        return list != null && list.size() > 0 ? (SysTeacherEntity) list.get(0) : null;
 
     }
 
     @Override
     public PageBean findByPage(String key, PageBean<SysTeacherEntity> pageBean) {
+
+        List<SysTeacherEntity> tempTeacherList = new ArrayList<>();
+
+        List<SysTeacherEntity> resTeacherList = new ArrayList<>();
+
         Session session = sessionFactory.openSession();
 
         Criteria criteria = session.createCriteria(SysTeacherEntity.class);
 
         if (key != null && !key.equals("")) {
             //搜索
-            List list = criteria.add(
+            tempTeacherList = criteria.add(
                     Restrictions.or(
                             Restrictions.or(Restrictions.like("teacherName", key, MatchMode.ANYWHERE)),
                             Restrictions.or(Restrictions.like("teacherCode", key, MatchMode.ANYWHERE))))
-                    .setFirstResult((pageBean.getCurrPage() - 1) * pageBean.getPageSize() )
+                    .setFirstResult((pageBean.getCurrPage() - 1) * pageBean.getPageSize())
                     .setMaxResults((pageBean.getCurrPage() - 1) * pageBean.getPageSize() + pageBean.getPageSize()).list();
-            pageBean.setRows(list);
         } else {
-            pageBean.setRows(
-                    criteria.setFirstResult((pageBean.getCurrPage() - 1) * pageBean.getPageSize())
-                            .setMaxResults((pageBean.getCurrPage() - 1) * pageBean.getPageSize() + pageBean.getPageSize()).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list());
+            tempTeacherList = criteria.setFirstResult((pageBean.getCurrPage() - 1) * pageBean.getPageSize())
+                    .setMaxResults((pageBean.getCurrPage() - 1) * pageBean.getPageSize() + pageBean.getPageSize()).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
         }
 
-        pageBean.setTotal(Math.toIntExact((Long) criteria.setProjection(Projections.rowCount()).uniqueResult()));
+        //查询对应的用户
+        tempTeacherList.forEach(v->{
+            SysUserEntity user = (SysUserEntity) sessionFactory.getCurrentSession().get(SysUserEntity.class, v.getUserId());
+            v.setSysUserEntity(user);
+            resTeacherList.add(v);
+        });
+
+        pageBean.setRows(resTeacherList).setTotal(Math.toIntExact((Long) criteria.setProjection(Projections.rowCount()).uniqueResult()));
+
         session.close();
 
         return pageBean;

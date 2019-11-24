@@ -49,8 +49,8 @@ public class AttendanceServiceImpl implements AttendanceService {
     }
 
     @Override
-    public PageBean findByPage(String key, PageBean<BizAttendanceEntity> pageBean) {
-        return attendanceDao.findByPage(key,pageBean);
+    public PageBean findByPage(String key, Integer classId, Integer courseId, PageBean<BizAttendanceEntity> pageBean) {
+        return attendanceDao.findByPage(key,classId,courseId,pageBean);
     }
 
     @Override

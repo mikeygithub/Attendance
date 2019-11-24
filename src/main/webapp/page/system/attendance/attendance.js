@@ -99,11 +99,15 @@ layui.use(['form','layer','table','laytpl'],function(){
         //attendance_type
         //attendance_cas_id
         var attendance_cas_id = $(".courseId").val();
-
+        var attendance_cla_id = $(".classesId").val();
+        if (attendance_cas_id == ''||attendance_cas_id == null||attendance_cla_id==''||attendance_cla_id==null){
+            layer.msg("请选择指定班级或课程");
+            return;
+        }
         var allStu = new Array();
         //获取缺勤类型
         layui.table.cache["userListTable"].forEach(item =>{
-            var att = {attendanceType:$('input[name=attendance_type'+item.studentId+']:checked').val(),attendanceStuId:item.studentId,attendanceCasId:attendance_cas_id};
+            var att = {attendanceType:$('input[name=attendance_type'+item.studentId+']:checked').val(),attendanceStuId:item.studentId,attendanceCasId:attendance_cas_id,attendanceClaId:attendance_cla_id};
             allStu.push(att);
         });
 
@@ -111,7 +115,7 @@ layui.use(['form','layer','table','laytpl'],function(){
 
         layer.confirm('确定保存？', {icon: 3, title: '提示信息'}, function (index) {
             $.post("../../../biz/attendance_saveByBatch.action",{
-                bizAttendanceEntities : JSON.stringify(allStu)
+                bizAttendanceEntities : JSON.stringify(allStu),
             },function(data){
                 if (data.code===0){
                     layer.msg("保存成功");

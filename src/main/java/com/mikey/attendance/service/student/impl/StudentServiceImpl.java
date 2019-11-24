@@ -32,8 +32,8 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public void update(SysStudentEntity studentEntity) {
-        studentDao.update(studentEntity);
+    public void update(SysStudentEntity studentEntity, Integer sex) {
+        studentDao.update(studentEntity, sex);
     }
 
     @Override

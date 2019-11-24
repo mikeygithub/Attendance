@@ -57,11 +57,12 @@ layui.use(['form','layer','table','laytpl'],function(){
                 var body = layui.layer.getChildFrame('body', index)
                     if(edit){
                         body.find(".Id").val(edit.teacherId);
+                        body.find(".userId").val(edit.userId);
                         body.find(".teacherName").val(edit.teacherName);  //登录名
                         body.find(".teacherPhone").val(edit.teacherPhone);  //登录名
                         body.find(".teacherCode").val(edit.teacherCode);  //邮箱
                         body.find(".teacherEmail").val(edit.teacherEmail);  //邮箱
-                        body.find(".teacherSex input[value="+edit.teacherSex+"]").prop("checked","checked");  //性别
+                        body.find(".teacherSex input[value="+edit.sysUserEntity.userSex+"]").prop("checked","checked");  //性别
                         body.find(".updateFlag").val(1);//更新标识
                     }
                     form.render();

@@ -11,6 +11,7 @@ layui.use(['form','layer'],function(){
         // 实际使用时的提交信息
         $.post(updateFlag==='0'?"../../../biz/teacher_save.action":"../../../biz/teacher_update.action",{//
             teacherId : updateFlag==='0'?null:$(".Id").val(),//id
+            userId : updateFlag==='0'?null:$(".userId").val(),//id
             teacherName : $(".teacherName").val(),  //登录名
             teacherPhone : $(".teacherPhone").val(),  //
             teacherCode : $(".teacherCode").val(),  //邮箱

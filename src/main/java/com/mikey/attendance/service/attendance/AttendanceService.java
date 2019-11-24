@@ -39,10 +39,12 @@ public interface AttendanceService {
      * 查询
      *
      * @param key
+     * @param classId
+     * @param courseId
      * @param pageBean
      * @return
      */
-    public PageBean findByPage(String key, PageBean<BizAttendanceEntity> pageBean);
+    public PageBean findByPage(String key, Integer classId, Integer courseId, PageBean<BizAttendanceEntity> pageBean);
 
     /**
      * 批量删除

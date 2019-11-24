@@ -18,7 +18,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate4.HibernateTemplate;
 import org.springframework.stereotype.Component;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,7 +38,7 @@ public class StudentDaoImpl implements StudentDao {
     private HibernateTemplate hibernateTemplate;
 
     @Override
-    public void save(SysStudentEntity studentEntity,Integer sex) {
+    public void save(SysStudentEntity studentEntity, Integer sex) {
 
         //登入用户
         SysUserEntity sysUserEntity = new SysUserEntity();
@@ -56,12 +55,30 @@ public class StudentDaoImpl implements StudentDao {
 
     @Override
     public void delete(SysStudentEntity studentEntity) {
+
+        SysStudentEntity stu = (SysStudentEntity) sessionFactory.getCurrentSession().get(SysStudentEntity.class, studentEntity.getStudentId());
+
+        SysUserEntity user = new SysUserEntity();
+
+        user.setUserId(stu.getUserId());
+
         sessionFactory.getCurrentSession().delete(studentEntity);
+
+        sessionFactory.getCurrentSession().delete(user);
+
     }
 
     @Override
-    public void update(SysStudentEntity studentEntity) {
+    public void update(SysStudentEntity studentEntity, Integer sex) {
+
         sessionFactory.getCurrentSession().update(studentEntity);
+
+        SysUserEntity user = (SysUserEntity) sessionFactory.getCurrentSession().get(SysUserEntity.class, studentEntity.getUserId());
+        //更新性别
+        if (!user.getUserSex().equals(sex)) {
+            user.setUserSex(sex);
+            sessionFactory.getCurrentSession().update(user);
+        }
     }
 
     @Override
@@ -78,32 +95,40 @@ public class StudentDaoImpl implements StudentDao {
 
         session.close();
 
-        return list!=null&&list.size()>0? (SysStudentEntity) list.get(0) :null;
+        return list != null && list.size() > 0 ? (SysStudentEntity) list.get(0) : null;
 
     }
 
     @Override
     public PageBean findByPage(String key, PageBean<SysStudentEntity> pageBean) {
+
         Session session = sessionFactory.openSession();
 
+        List<SysStudentEntity> tempStuList = new ArrayList<>();
+        List<SysStudentEntity> result = new ArrayList<>();
         Criteria criteria = session.createCriteria(SysStudentEntity.class);
 
         if (key != null && !key.equals("")) {
             //搜索
-            List list = criteria.add(
+            tempStuList = criteria.add(
                     Restrictions.or(
                             Restrictions.or(Restrictions.like("studentCode", key, MatchMode.ANYWHERE)),
                             Restrictions.or(Restrictions.like("studentName", key, MatchMode.ANYWHERE))))
-                    .setFirstResult((pageBean.getCurrPage() - 1) * pageBean.getPageSize() )
+                    .setFirstResult((pageBean.getCurrPage() - 1) * pageBean.getPageSize())
                     .setMaxResults((pageBean.getCurrPage() - 1) * pageBean.getPageSize() + pageBean.getPageSize()).list();
-            pageBean.setRows(list);
         } else {
-            pageBean.setRows(
-                    criteria.setFirstResult((pageBean.getCurrPage() - 1) * pageBean.getPageSize())
-                            .setMaxResults((pageBean.getCurrPage() - 1) * pageBean.getPageSize() + pageBean.getPageSize()).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list());
+            tempStuList = criteria.setFirstResult((pageBean.getCurrPage() - 1) * pageBean.getPageSize())
+                    .setMaxResults((pageBean.getCurrPage() - 1) * pageBean.getPageSize() + pageBean.getPageSize()).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
         }
 
-        pageBean.setTotal(Math.toIntExact((Long) criteria.setProjection(Projections.rowCount()).uniqueResult()));
+        tempStuList.forEach(v->{
+            SysUserEntity user = (SysUserEntity) sessionFactory.getCurrentSession().get(SysUserEntity.class, v.getUserId());
+            v.setSysUserEntity(user);
+            result.add(v);
+        });
+
+
+        pageBean.setRows(result).setTotal(Math.toIntExact((Long) criteria.setProjection(Projections.rowCount()).uniqueResult()));
         session.close();
 
         return pageBean;
@@ -125,6 +150,7 @@ public class StudentDaoImpl implements StudentDao {
 
     /**
      * 获取全部学生
+     *
      * @param classId
      * @param attendanceType
      * @param number
@@ -141,16 +167,16 @@ public class StudentDaoImpl implements StudentDao {
 
         List<BizStuOfClaEntity> claOfList = criteria.add(Restrictions.eq("claId", classId)).list();
 
-        claOfList.forEach(v->{
-            allStu.add((SysStudentEntity) sessionFactory.getCurrentSession().get(SysStudentEntity.class,v.getStuId()));
+        claOfList.forEach(v -> {
+            allStu.add((SysStudentEntity) sessionFactory.getCurrentSession().get(SysStudentEntity.class, v.getStuId()));
         });
 
         PageBean<SysStudentEntity> pageBean = new PageBean<>();
         //随机抽取
-        if (SysConstant.EXTRACT_TYPE_RANDOM.equals(attendanceType)&&number!=allStu.size()){
+        if (SysConstant.EXTRACT_TYPE_RANDOM.equals(attendanceType) && number != allStu.size()) {
             List<SysStudentEntity> extract = extract(allStu, number);
             pageBean.setRows(extract).setTotal(extract.size());
-        }else {//全部抽取
+        } else {//全部抽取
             pageBean.setRows(allStu).setTotal(allStu.size());
         }
         return pageBean;
@@ -158,17 +184,18 @@ public class StudentDaoImpl implements StudentDao {
 
     /**
      * 随机抽取
+     *
      * @param allStu
      * @param number
      * @return
      */
-    private List<SysStudentEntity> extract(List<SysStudentEntity> allStu, Integer number){
+    private List<SysStudentEntity> extract(List<SysStudentEntity> allStu, Integer number) {
         //返回结果
         List<SysStudentEntity> studentList = new ArrayList<>();
         //抽取
-        for (int i = 0; i < (number>allStu.size()?allStu.size():number); i++) {
+        for (int i = 0; i < (number > allStu.size() ? allStu.size() : number); i++) {
             //获取0-allStu.length的随机数
-            int random = (int)(Math.random()*allStu.size());
+            int random = (int) (Math.random() * allStu.size());
             //添加学生,随机获取下标为random的学生并且把它添加到要传回页面的list里面
             studentList.add(allStu.get(random));
             //将本次已经抽取过的学生从预抽取的list里面移除
@@ -179,6 +206,7 @@ public class StudentDaoImpl implements StudentDao {
 
     /**
      * 查询穿梭框的数据
+     *
      * @param classId
      * @return
      */
@@ -188,22 +216,22 @@ public class StudentDaoImpl implements StudentDao {
         ArrayList<PageViewTransferVo> pageViewTransferVos = new ArrayList<>();
 
         ArrayList<Integer> select = new ArrayList<>();
-            //查询全部
-            Criteria criteria = sessionFactory.getCurrentSession().createCriteria(SysStudentEntity.class);
-            criteria.list().forEach(v->{
-                pageViewTransferVos.add(new PageViewTransferVo().setTitle(((SysStudentEntity)v).getStudentName()).setValue(((SysStudentEntity)v).getStudentId()+"").setChecked(false).setDisabled(false));
-            });
-            //查询全部
-            List<SysStudentEntity> allStu = sessionFactory.getCurrentSession().createCriteria(SysStudentEntity.class).list();
-            //查询中间表
-            Criteria criteriaof = sessionFactory.getCurrentSession().createCriteria(BizStuOfClaEntity.class);
-            //当前班级对应的学生中间表
-            //已经选择的学生
-            criteriaof.add(Restrictions.eq("claId",classId)).list().forEach(v->{
-                select.add(((BizStuOfClaEntity)v).getStuId());
-            });
+        //查询全部
+        Criteria criteria = sessionFactory.getCurrentSession().createCriteria(SysStudentEntity.class);
+        criteria.list().forEach(v -> {
+            pageViewTransferVos.add(new PageViewTransferVo().setTitle(((SysStudentEntity) v).getStudentName()).setValue(((SysStudentEntity) v).getStudentId() + "").setChecked(false).setDisabled(false));
+        });
+        //查询全部
+        List<SysStudentEntity> allStu = sessionFactory.getCurrentSession().createCriteria(SysStudentEntity.class).list();
+        //查询中间表
+        Criteria criteriaof = sessionFactory.getCurrentSession().createCriteria(BizStuOfClaEntity.class);
+        //当前班级对应的学生中间表
+        //已经选择的学生
+        criteriaof.add(Restrictions.eq("claId", classId)).list().forEach(v -> {
+            select.add(((BizStuOfClaEntity) v).getStuId());
+        });
 
-        return R.ok().put("data",pageViewTransferVos).put("select",select);
+        return R.ok().put("data", pageViewTransferVos).put("select", select);
     }
 
 }

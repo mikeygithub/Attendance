@@ -22,6 +22,10 @@ public class SysTeacherEntity {
     private String teacherEmail;
     private Integer userId;
 
+    @Transient
+    private SysUserEntity sysUserEntity;
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "teacher_id")
@@ -93,6 +97,15 @@ public class SysTeacherEntity {
                 Objects.equals(teacherCode, that.teacherCode) &&
                 Objects.equals(teacherPhone, that.teacherPhone) &&
                 Objects.equals(teacherEmail, that.teacherEmail);
+    }
+
+    @Transient
+    public SysUserEntity getSysUserEntity() {
+        return sysUserEntity;
+    }
+
+    public void setSysUserEntity(SysUserEntity sysUserEntity) {
+        this.sysUserEntity = sysUserEntity;
     }
 
     @Override

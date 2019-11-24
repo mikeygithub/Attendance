@@ -25,7 +25,7 @@ public interface StudentDao {
     /**
      * 修改
      */
-    public void update(SysStudentEntity studentEntity);
+    public void update(SysStudentEntity studentEntity, Integer sex);
 
     /**
      * 查询
