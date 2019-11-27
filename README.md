@@ -15,3 +15,9 @@
 全部点名是指老师对全班学生进行逐个点名并记录其出勤状态。老师本人可以检索考勤信息。
 考勤情况统计。考勤情况统计包括考勤数据汇总、考勤名单导出等。
 ````
+部署
+===================
+1.打包镜像：`docker build -t mikeyboom/attendance:v1.0.0 .`
+2.推送仓库：`docker push mikeyboom/attendance:v1.0.0`
+3.拉取镜像：`docker pull mikeyboom/attendance:v1.0.0`
+4.运行容器：`docker run -d --name attendancev1.0.0 -p 8989:8080 <image_name>`
