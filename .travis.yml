@@ -1,4 +1,4 @@
-language: bash
+language: java
 services:
 - docker
 sudo: required
@@ -6,6 +6,7 @@ branches:
   only:
   - master
 script:
+- mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
 - docker build . -t "mikeyboom/attendance:latest"
 after_success:
 - docker login --username=$dockername -p="$dockerpassword" dockerhub
