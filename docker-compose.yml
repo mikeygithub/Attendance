@@ -1,0 +1,8 @@
+version: '2'
+services:
+  attendance:
+    build: .
+    image: mikeyboom/attendance
+    ports:
+      - "8004:8080"
+    container_name: attendance
