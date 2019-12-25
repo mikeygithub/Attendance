@@ -9,8 +9,8 @@ script:
 - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
 - docker build . -t "mikeyboom/attendance:latest"
 after_success:
-- docker login --username=$dockername -p="$dockerpassword" dockerhub
-- docker push mikeyboom/dockerhub:latest
+- docker login -u=$dockername -p="$dockerpassword"
+- docker push mikeyboom/attendance:latest
 - chmod 600 id_rsa
 - scp -o "StrictHostKeyChecking no" -i id_rsa docker-compose.yml root@$ip:/home/mikey/Attendance/
 - ssh -o "StrictHostKeyChecking no" -i id_rsa root@$ip "cd /home/mikey/Attendance/;sudo
