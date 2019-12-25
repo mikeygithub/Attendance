@@ -1,13 +1,25 @@
+#环境语言
 language: java
+#所选服务
 services:
 - docker
+#权限
 sudo: required
+#分支
 branches:
   only:
   - master
+#执行脚本
 script:
 - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
 - docker build . -t "mikeyboom/attendance:latest"
+#安装之前执行脚本
+before_install:
+- openssl aes-256-cbc -K $encrypted_71a1e6d76d99_key -iv $encrypted_71a1e6d76d99_iv
+-in id_rsa.enc -out ~/.ssh/id_rsa -d
+- chmod 600 ~/.ssh/id_rsa
+- echo -e "Host $ip\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
+#成功之后执行的脚本
 after_success:
 - docker login -u=$dockername -p="$dockerpassword"
 - docker push mikeyboom/attendance:latest
@@ -16,8 +28,3 @@ after_success:
 - ssh -o "StrictHostKeyChecking no" -i id_rsa root@$ip "cd /home/mikey/Attendance/;sudo
   docker-compose -f docker-compose.yml pull;sudo docker-compose -f docker-compose.yml
   up -d;exit"
-before_install:
-- openssl aes-256-cbc -K $encrypted_71a1e6d76d99_key -iv $encrypted_71a1e6d76d99_iv
-  -in id_rsa.enc -out ~/.ssh/id_rsa -d
-- chmod 600 ~/.ssh/id_rsa
-- echo -e "Host $ip\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
